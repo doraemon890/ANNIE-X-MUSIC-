@@ -1,5 +1,5 @@
 from pyrogram.types import InlineKeyboardButton
-from ANNIEMUSIC import ANNIEMUSIC
+from ANNIEMUSIC import app
 
 
 CHATBOT_ON = [
