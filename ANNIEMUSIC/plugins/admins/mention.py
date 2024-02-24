@@ -58,7 +58,7 @@ async def cancelcmd(_, message):
             print(f"Removed chat_id {chat_id} from SPAM_CHATS")  # Add this line
         except Exception as e:
             print(f"Error removing chat_id from SPAM_CHATS: {e}")
-    pass 
+    else:
         return await message.reply_text("**🦋ᴛᴀɢ ʀᴏᴋɴᴇ ᴡᴀʟᴇ ᴋɪ ᴍᴀᴀ ᴋᴀ ʙʜᴀʀᴏsᴀ ᴊᴇᴇᴛᴜ.....🫠!**")
     else:
         await message.reply_text("**No ongoing process!**")
