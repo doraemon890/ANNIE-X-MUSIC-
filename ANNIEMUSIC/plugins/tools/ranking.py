@@ -117,6 +117,7 @@ async def today_rank(_, query):
     else:
         await query.answer("No data available for today.")
 
+
 @app.on_callback_query(filters.regex("overall"))
 async def overall_rank(_, query):
     top_members = collection.find().sort("total_messages", -1).limit(10)
@@ -137,3 +138,5 @@ async def overall_rank(_, query):
                InlineKeyboardButton("TODAY", callback_data="today"),
             ]])
     await query.message.edit_text(response, reply_markup=button)
+
+
