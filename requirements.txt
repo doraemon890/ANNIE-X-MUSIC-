@@ -6,7 +6,6 @@ aiohttp
 asyncio
 uvloop
 beautifulsoup4
-daxxhub
 deepai
 python-whois
 dnspython
