@@ -122,7 +122,7 @@ async def today_rank(_, query):
 async def overall_rank(_, query):
     top_members = collection.find().sort("total_messages", -1).limit(10)
     
-    response = "**📈 LEADERBOARD**\n"
+    response = "**📈 LEADERBOARD**"
     for idx, member in enumerate(top_members, start=1):
         user_id = member["_id"]
         total_messages = member["total_messages"]
