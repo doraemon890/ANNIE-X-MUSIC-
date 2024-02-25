@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 import logging
-
+from ANNIEMUSIC import app
 
 app = Client("@Annie_X_music_bot")
 
