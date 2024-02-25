@@ -92,60 +92,54 @@ async def drawText(image_path, text):
             current_h += u_height + pad
 
     if lower_text:
-        for l_text in textwrap.wrap(lower_text, width=15):
-            u_width, u_height = draw.textsize(l_text, font=m_font)
-
-            draw.text(
-                xy=(
-                    ((i_width - u_width) / 2) - 2,
-                    i_height - u_height - int((20 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-
-            draw.text(
-                xy=(
-                    ((i_width - u_width) / 2) + 2,
-                    i_height - u_height - int((20 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    (i_height - u_height - int((20 / 640) * i_width)) - 2,
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    (i_height - u_height - int((20 / 640) * i_width)) + 2,
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(0, 0, 0),
-            )
-
-            draw.text(
-                xy=(
-                    (i_width - u_width) / 2,
-                    i_height - u_height - int((20 / 640) * i_width),
-                ),
-                text=l_text,
-                font=m_font,
-                fill=(255, 255, 255),
-            )
-
-            current_h += u_height + pad
+    for l_text in textwrap.wrap(lower_text, width=15):
+        l_width, l_height = draw.textsize(l_text, font=m_font)
+        draw.text(
+            xy=(
+                ((i_width - l_width) / 2) - 2,
+                i_height - l_height - int((20 / 640) * i_width),
+            ),
+            text=l_text,
+            font=m_font,
+            fill=(0, 0, 0),
+        )
+        draw.text(
+            xy=(
+                ((i_width - l_width) / 2) + 2,
+                i_height - l_height - int((20 / 640) * i_width),
+            ),
+            text=l_text,
+            font=m_font,
+            fill=(0, 0, 0),
+        )
+        draw.text(
+            xy=(
+                (i_width - l_width) / 2,
+                (i_height - l_height - int((20 / 640) * i_width)) - 2,
+            ),
+            text=l_text,
+            font=m_font,
+            fill=(0, 0, 0),
+        )
+        draw.text(
+            xy=(
+                (i_width - l_width) / 2,
+                (i_height - l_height - int((20 / 640) * i_width)) + 2,
+            ),
+            text=l_text,
+            font=m_font,
+            fill=(0, 0, 0),
+        )
+        draw.text(
+            xy=(
+                (i_width - l_width) / 2,
+                i_height - l_height - int((20 / 640) * i_width),
+            ),
+            text=l_text,
+            font=m_font,
+            fill=(255, 255, 255),
+        )
+        current_h += l_height + pad
 
     image_name = "memify.webp"
 
