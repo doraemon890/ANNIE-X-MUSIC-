@@ -133,5 +133,3 @@ async def select_model(_, query: t.CallbackQuery):
         media=images,
         reply_to_message_id=prompt_data['reply_to_id']
     )
-
-app.run()
