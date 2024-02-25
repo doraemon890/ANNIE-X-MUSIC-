@@ -4,63 +4,52 @@ from pyrogram.types import InlineKeyboardButton
 from math import ceil
 import asyncio
 from ANNIEMUSIC import app
-
-
+from tgcrypto import AuthKey
 
 api = ApiClient()
 Models = api.getModels()['models']['image']
-
 Database = {}
 
-
-
-
-async def ImageGeneration(model,prompt):
+async def ImageGeneration(model, prompt):
     try:
         client = AsyncClient()
-        output = await client.generate(model,prompt,"")
+        output = await client.generate(model, prompt, "")
         if output['code'] != 1:
             return 2
         elif output['code'] == 69:
             return output['code']
-        task_id, request_id = output['task_id'],output['request_id']
+        
+        task_id, request_id = output['task_id'], output['request_id']
         await asyncio.sleep(20)
         tries = 0
         image_url = None
-        resp = await client.getImages(task_id,request_id)
-        while True:
-            if resp['code'] == 2:
-                image_url = resp['img_urls']
-                break
-            if tries > 15:
-                break
+        resp = await client.getImages(task_id, request_id)
+        
+        while resp['code'] != 2 and tries <= 15:
             await asyncio.sleep(5)
-            resp = await client.getImages(task_id,request_id)
+            resp = await client.getImages(task_id, request_id)
             tries += 1
-            continue
+        
+        if resp['code'] == 2:
+            image_url = resp['img_urls']
+        
         return image_url
     except Exception as e:
-        raise Exception(f"ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ᴛʜᴇ ɪᴍᴀɢᴇ: {e}")
+        raise Exception(f"Failed to generate the image: {e}")
     finally:
         await client.close()
-      
 
 def getText(message):
     """Extract Text From Commands"""
     text_to_return = message.text
-    if message.text is None:
+    if text_to_return is None or " " not in text_to_return:
         return None
-    if " " in text_to_return:
-        try:
-            return message.text.split(None, 1)[1]
-        except IndexError:
-            return None
-    else:
+    try:
+        return message.text.split(None, 1)[1]
+    except IndexError:
         return None
 
-        
-
-class EqInlineKeyboardButton(InlineKeyboardButton):
+class AnInlineKeyboardButton(InlineKeyboardButton):
     def __eq__(self, other):
         return self.text == other.text
 
@@ -70,66 +59,38 @@ class EqInlineKeyboardButton(InlineKeyboardButton):
     def __gt__(self, other):
         return self.text > other.text
 
-def paginate_models(page_n: int, models: list,user_id) -> list:
-    modules = sorted(
-        [
-            EqInlineKeyboardButton(
-            x['name'],
-            callback_data=f"d.{x['id']}.{user_id}"
-                )
-                for x in models
-            ]
-            )
-
+def paginate_models(page_n: int, models: list, user_id) -> list:
+    modules = sorted([
+        AnInlineKeyboardButton(x['name'], callback_data=f"d.{x['id']}.{user_id}")
+        for x in models
+    ])
+    
     pairs = list(zip(modules[::3], modules[1::3]))
-    i = 0
-    for m in pairs:
-        for _ in m:
-            i += 1
+    i = sum(1 for _ in sum(pairs, ()))
+    
     if len(modules) - i == 1:
         pairs.append((modules[-1],))
     elif len(modules) - i == 2:
-        pairs.append(
-            (
-                modules[-2],
-                modules[-1],
-            )
-        )
-
+        pairs.append((modules[-2], modules[-1]))
+    
     COLUMN_SIZE = 3
-
     max_num_pages = ceil(len(pairs) / COLUMN_SIZE)
     modulo_page = page_n % max_num_pages
-
-    # can only have a certain amount of buttons side by side
+    
     if len(pairs) > COLUMN_SIZE:
-        pairs = pairs[
-            modulo_page * COLUMN_SIZE : COLUMN_SIZE * (modulo_page + 1)
-        ] + [
+        pairs = pairs[modulo_page * COLUMN_SIZE: COLUMN_SIZE * (modulo_page + 1)] + [
             (
-                EqInlineKeyboardButton(
-                    "◁",
-                    callback_data=f"d.left.{modulo_page}.{user_id}"
-                ),
-                EqInlineKeyboardButton(
-                    "⌯ ᴄᴀɴᴄᴇʟ ⌯",
-                    callback_data=f"close_data"
-                ),
-                EqInlineKeyboardButton(
-                    "▷",
-                    callback_data=f"d.right.{modulo_page}.{user_id}"
-                ),
+                AnInlineKeyboardButton("◁", callback_data=f"d.left.{modulo_page}.{user_id}"),
+                AnInlineKeyboardButton("⌯ ᴄᴀɴᴄᴇʟ ⌯", callback_data="close_data"),
+                AnInlineKeyboardButton("▷", callback_data=f"d.right.{modulo_page}.{user_id}")
             )
         ]
     else:
-        pairs += [[EqInlineKeyboardButton("⌯ ʙᴀᴄᴋ ⌯", callback_data=f"d.-1.{user_id}")]]
-
+        pairs += [[AnInlineKeyboardButton("⌯ ʙᴀᴄᴋ ⌯", callback_data=f"d.-1.{user_id}")]]
+    
     return pairs
 
-
-                     
-
-
+# The remaining code for message handling and callback queries remains the same
 
 @app.on_message(filters.command(["draw","create","imagine","dream"]))
 async def draw(_: app, m: t.Message):
@@ -193,5 +154,5 @@ async def selectModel(_:app,query:t.CallbackQuery):
         chat_id=query.message.chat.id,
         media=images,
         reply_to_message_id=promptData['reply_to_id']
-        
+
     )
