@@ -38,7 +38,7 @@ requests
 emojis
 speedtest-cli
 spotipy
-tgcrypto==0.3.2
+tgcrypto==1.2.5
 telegraph
 unidecode
 yt-dlp
