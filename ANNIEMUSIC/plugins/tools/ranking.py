@@ -70,7 +70,7 @@ async def today_(_, message):
 
 @app.on_message(filters.command("ranking"))
 async def ranking(_, message):
-    top_members = await collection.find().sort("total_messages", -1).limit(10).to_list(length=10)
+     top_members = collection.find().sort("total_messages", -1).limit(10)
 
     response = "**📈 LEADERBOARD**\n"
     for idx, member in enumerate(top_members, start=1):
@@ -119,7 +119,7 @@ async def today_rank(_, query):
 
 @app.on_callback_query(filters.regex("overall"))
 async def overall_rank(_, query):
-    top_members = await collection.find().sort("total_messages", -1).limit(10).to_list(length=10)
+   top_members = collection.find().sort("total_messages", -1).limit(10)
     
     response = "**📈 LEADERBOARD**\n"
     for idx, member in enumerate(top_members, start=1):
