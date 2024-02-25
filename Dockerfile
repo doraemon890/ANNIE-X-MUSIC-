@@ -5,8 +5,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip
-RUN python3 -m pip install --no-cache-dir -U pip
+
 
 COPY . /app/
 WORKDIR /app/
