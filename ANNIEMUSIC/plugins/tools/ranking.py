@@ -5,7 +5,7 @@ from config import MONGO_DB_URI
 import json
 from json import loads
 import telegram
-from pyrogram.types import *
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 mongo_client = MongoClient(MONGO_DB_URI)
@@ -13,15 +13,12 @@ db = mongo_client["kakire6315"]
 collection = db["ranking"]
 
 user_data = {}
-
 today = {}
-
 pic = "https://telegra.ph/file/2c6d1a6f78eba6199933a.jpg"
-
 
 # ------------------- watcher ----------------------- #
 
-@app.on_message(filters.group & filters.group, group=6)
+@app.on_message(filters.group & filters.text, group=6)
 def today_watcher(_, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
@@ -36,13 +33,12 @@ def today_watcher(_, message):
             today[chat_id][user_id]["total_messages"] = 1
 
 
-@app.on_message(filters.group & filters.group, group=11)
+@app.on_message(filters.group & filters.text, group=11)
 def _watcher(_, message):
     user_id = message.from_user.id    
     user_data.setdefault(user_id, {}).setdefault("total_messages", 0)
     user_data[user_id]["total_messages"] += 1    
     collection.update_one({"_id": user_id}, {"$inc": {"total_messages": 1}}, upsert=True)
-
 
 # ------------------- ranks ------------------ #
 
@@ -50,7 +46,7 @@ def _watcher(_, message):
 async def today_(_, message):
     chat_id = message.chat.id
     if chat_id in today:
-        users_data = [(user_id, user_data["total_messages"]) for user_id, user_data in today[chat_id].items()]
+        users_data = [(user_id, user_data[user_id]["total_messages"]) for user_id in today[chat_id].keys()]
         sorted_users_data = sorted(users_data, key=lambda x: x[1], reverse=True)[:10]
         
         if sorted_users_data:
@@ -72,12 +68,10 @@ async def today_(_, message):
     else:
         await message.reply_text("No data available for today.")
 
-
-
 @app.on_message(filters.command("ranking"))
 async def ranking(_, message):
-    top_members = collection.find().sort("total_messages", -1).limit(10)
-    
+    top_members = await collection.find().sort("total_messages", -1).limit(10).to_list(length=10)
+
     response = "**📈 LEADERBOARD**\n"
     for idx, member in enumerate(top_members, start=1):
         user_id = member["_id"]
@@ -95,15 +89,13 @@ async def ranking(_, message):
             ]])
     await message.reply_photo(photo=pic, caption=response, reply_markup=button)
 
-
-
 # -------------------- regex -------------------- # 
 
 @app.on_callback_query(filters.regex("today"))
 async def today_rank(_, query):
     chat_id = query.message.chat.id
     if chat_id in today:
-        users_data = [(user_id, user_data["total_messages"]) for user_id, user_data in today[chat_id].items()]
+        users_data = [(user_id, user_data[user_id]["total_messages"]) for user_id in today[chat_id].keys()]
         sorted_users_data = sorted(users_data, key=lambda x: x[1], reverse=True)[:10]
         
         if sorted_users_data:
@@ -125,11 +117,9 @@ async def today_rank(_, query):
     else:
         await query.answer("No data available for today.")
 
-
-
 @app.on_callback_query(filters.regex("overall"))
 async def overall_rank(_, query):
-    top_members = collection.find().sort("total_messages", -1).limit(10)
+    top_members = await collection.find().sort("total_messages", -1).limit(10).to_list(length=10)
     
     response = "**📈 LEADERBOARD**\n"
     for idx, member in enumerate(top_members, start=1):
@@ -147,10 +137,3 @@ async def overall_rank(_, query):
                InlineKeyboardButton("TODAY", callback_data="today"),
             ]])
     await query.message.edit_text(response, reply_markup=button)
-
-
-
-
-    
-
-    
