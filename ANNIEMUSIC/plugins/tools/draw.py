@@ -3,6 +3,7 @@ from lexica import Client as ApiClient, AsyncClient
 from pyrogram.types import InlineKeyboardButton
 from math import ceil
 import asyncio
+import uvloop
 from ANNIEMUSIC import app
 from tgcrypto import AuthKey
 
@@ -14,6 +15,7 @@ async def ImageGeneration(model, prompt):
     try:
         client = AsyncClient()
         output = await client.generate(model, prompt, "")
+        
         if output['code'] != 1:
             return 2
         elif output['code'] == 69:
@@ -64,19 +66,19 @@ def paginate_models(page_n: int, models: list, user_id) -> list:
         AnInlineKeyboardButton(x['name'], callback_data=f"d.{x['id']}.{user_id}")
         for x in models
     ])
-    
+
     pairs = list(zip(modules[::3], modules[1::3]))
     i = sum(1 for _ in sum(pairs, ()))
-    
+
     if len(modules) - i == 1:
         pairs.append((modules[-1],))
     elif len(modules) - i == 2:
         pairs.append((modules[-2], modules[-1]))
-    
+
     COLUMN_SIZE = 3
     max_num_pages = ceil(len(pairs) / COLUMN_SIZE)
     modulo_page = page_n % max_num_pages
-    
+
     if len(pairs) > COLUMN_SIZE:
         pairs = pairs[modulo_page * COLUMN_SIZE: COLUMN_SIZE * (modulo_page + 1)] + [
             (
@@ -87,7 +89,7 @@ def paginate_models(page_n: int, models: list, user_id) -> list:
         ]
     else:
         pairs += [[AnInlineKeyboardButton("⌯ ʙᴀᴄᴋ ⌯", callback_data=f"d.-1.{user_id}")]]
-    
+
     return pairs
 
 # The remaining code for message handling and callback queries remains the same
