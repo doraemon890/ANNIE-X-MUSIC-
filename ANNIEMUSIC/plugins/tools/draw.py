@@ -1,6 +1,5 @@
 import asyncio
 from pyrogram import Client, filters, types as t
-from pyrogram.tgcrypto import TgCrypto # Import TgCrypto
 from lexica import Client as ApiClient
 from pyrogram.types import InlineKeyboardButton
 from math import ceil
