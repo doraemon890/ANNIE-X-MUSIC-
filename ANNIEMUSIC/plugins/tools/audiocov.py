@@ -22,14 +22,14 @@ async def speech_to_text(bot, message):
         audio = message.reply_to_message.audio
         audio_data = await bot.download_media(audio)
         
-        # Convert audio to WAV format
-        sound = AudioSegment.from_file(io.BytesIO(audio_data))
-        wav_data = io.BytesIO()
-        sound.export(wav_data, format="wav")
-        wav_data.seek(0)
+        # Convert audio to MP3 format
+        sound = AudioSegment.from_file(io.BytesIO(audio_data), format="mp3")
+        mp3_data = io.BytesIO()
+        sound.export(mp3_data, format="mp3")
+        mp3_data.seek(0)
         
         # Convert audio to text
-        text = audio_to_text(wav_data)
+        text = audio_to_text(mp3_data)
         
         # Send the text as a reply
         await message.reply_text(text)
