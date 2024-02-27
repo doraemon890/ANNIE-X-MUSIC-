@@ -7,12 +7,11 @@ from ANNIEMUSIC import app
 # Function to convert audio file to text
 def audio_to_text(audio_data):
     recognizer = sr.Recognizer()
+    audio_data.seek(0)  # Ensure the BytesIO object is at the beginning
     with sr.AudioFile(audio_data) as source:
-        audio_text = recognizer.recognize_google(
-            audio_data, 
-            language='en-US'
-        )
+        audio_text = recognizer.recognize_google(source, language='en-US')
     return audio_text
+
 
 
 # Command to handle /stt
