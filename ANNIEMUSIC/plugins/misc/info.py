@@ -19,7 +19,6 @@ anniephoto = [
 
 # --------------------------------------------------------------------------------- #
 
-
 get_font = lambda font_size, font_path: ImageFont.truetype(font_path, font_size)
 resize_text = (
     lambda text_size, text: (text[:text_size] + "...").upper()
@@ -28,7 +27,6 @@ resize_text = (
 )
 
 # --------------------------------------------------------------------------------- #
-
 
 async def get_userinfo_img(
     bg_path: str,
@@ -58,11 +56,9 @@ async def get_userinfo_img(
         fill=(125, 227, 230),
     )
 
-
     path = f"./userinfo_img_{user_id}.png"
     bg.save(path)
     return path
-   
 
 # --------------------------------------------------------------------------------- #
 
@@ -70,7 +66,6 @@ bg_path = "ANNIEMUSIC/assets/annie/jarvisXinfo.png"
 font_path = "ANNIEMUSIC/assets/annie/jarvisinf.ttf"
 
 # --------------------------------------------------------------------------------- #
-
 
 INFO_TEXT = """**
 ❅─────✧❅✦❅✧─────❅
@@ -106,17 +101,18 @@ async def userstatus(user_id):
          return "Online."
    except:
         return "**sᴏᴍᴇᴛʜɪɴɢ ᴡʀᴏɴɢ ʜᴀᴘᴘᴇɴᴇᴅ !**"
-    
 
 # --------------------------------------------------------------------------------- #
 
-
-
-@app.on_message(filters.command(["info", "userinfo"], prefixes=["/", "!","."]))
+@app.on_message(filters.command(["info", "userinfo"], prefixes=["/", "!", "."]))
 async def userinfo(_, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
-    
+
+    if message.command[0] in ["/info", "!info", ".info"]:
+        await app.send_message(chat_id, "💻")
+        return
+
     if not message.reply_to_message and len(message.command) == 2:
         try:
             user_id = message.text.split(None, 1)[1]
@@ -211,4 +207,4 @@ async def userinfo(_, message):
                 id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
         except Exception as e:
             await message.reply_text(str(e))
-                
+            
