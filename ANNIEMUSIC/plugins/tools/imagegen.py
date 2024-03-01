@@ -36,6 +36,9 @@ def generate_image(text, image_size=(1024, 1024)):
         size="1024x1024"
     )
 
+    if 'images' not in response or len(response['images']) == 0:
+        raise ValueError("Failed to generate image. No images found in response.")
+
     image_url = response['images'][0]['url']
     image_data = requests.get(image_url).content
     image = Image.open(BytesIO(image_data))
