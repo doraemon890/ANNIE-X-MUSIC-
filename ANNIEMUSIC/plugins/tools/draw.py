@@ -1,40 +1,49 @@
 from pyrogram import Client, filters, types as t
-from lexica import Client as ApiClient
+from lexica import Client as ApiClient, AsyncClient
 from pyrogram.types import InlineKeyboardButton
 from math import ceil
 import asyncio
 from ANNIEMUSIC import app
 
+
+
 api = ApiClient()
 Models = api.getModels()['models']['image']
+
 Database = {}
-client = Client("JARVIS")  # Create a single instance of Client with session name "JARVIS"
 
 
-async def ImageGeneration(model, prompt):
+
+
+async def ImageGeneration(model,prompt):
     try:
-        output = await client.generate(model, prompt, "")
+        client = AsyncClient()
+        output = await client.generate(model,prompt,"")
         if output['code'] != 1:
             return 2
         elif output['code'] == 69:
             return output['code']
-        task_id, request_id = output['task_id'], output['request_id']
-        await asyncio.sleep(10)  # Adjust sleep time if necessary
+        task_id, request_id = output['task_id'],output['request_id']
+        await asyncio.sleep(20)
         tries = 0
         image_url = None
+        resp = await client.getImages(task_id,request_id)
         while True:
-            resp = await client.getImages(task_id, request_id)
             if resp['code'] == 2:
                 image_url = resp['img_urls']
                 break
             if tries > 15:
                 break
-            await asyncio.sleep(2)  # Adjust sleep time if necessary
+            await asyncio.sleep(5)
+            resp = await client.getImages(task_id,request_id)
             tries += 1
+            continue
         return image_url
     except Exception as e:
-        raise Exception(f"Failed to generate the image: {e}")
-
+        raise Exception(f"ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ᴛʜᴇ ɪᴍᴀɢᴇ: {e}")
+    finally:
+        await client.close()
+      
 
 def getText(message):
     """Extract Text From Commands"""
@@ -49,6 +58,7 @@ def getText(message):
     else:
         return None
 
+        
 
 class AnInlineKeyboardButton(InlineKeyboardButton):
     def __eq__(self, other):
@@ -60,17 +70,16 @@ class AnInlineKeyboardButton(InlineKeyboardButton):
     def __gt__(self, other):
         return self.text > other.text
 
-
-def paginate_models(page_n: int, models: list, user_id) -> list:
+def paginate_models(page_n: int, models: list,user_id) -> list:
     modules = sorted(
         [
             AnInlineKeyboardButton(
-                x['name'],
-                callback_data=f"d.{x['id']}.{user_id}"
+            x['name'],
+            callback_data=f"d.{x['id']}.{user_id}"
+                )
+                for x in models
+            ]
             )
-            for x in models
-        ]
-    )
 
     pairs = list(zip(modules[::3], modules[1::3]))
     i = 0
@@ -95,47 +104,50 @@ def paginate_models(page_n: int, models: list, user_id) -> list:
     # can only have a certain amount of buttons side by side
     if len(pairs) > COLUMN_SIZE:
         pairs = pairs[
-                modulo_page * COLUMN_SIZE: COLUMN_SIZE * (modulo_page + 1)
-                ] + [
-                    (
-                        AnInlineKeyboardButton(
-                            "◁",
-                            callback_data=f"d.left.{modulo_page}.{user_id}"
-                        ),
-                        AnInlineKeyboardButton(
-                            "⌯ ᴄᴀɴᴄᴇʟ ⌯",
-                            callback_data=f"close_data"
-                        ),
-                        AnInlineKeyboardButton(
-                            "▷",
-                            callback_data=f"d.right.{modulo_page}.{user_id}"
-                        ),
-                    )
-                ]
+            modulo_page * COLUMN_SIZE : COLUMN_SIZE * (modulo_page + 1)
+        ] + [
+            (
+                AnInlineKeyboardButton(
+                    "◁",
+                    callback_data=f"d.left.{modulo_page}.{user_id}"
+                ),
+                AnInlineKeyboardButton(
+                    "⌯ ᴄᴀɴᴄᴇʟ ⌯",
+                    callback_data=f"close_data"
+                ),
+                AnInlineKeyboardButton(
+                    "▷",
+                    callback_data=f"d.right.{modulo_page}.{user_id}"
+                ),
+            )
+        ]
     else:
         pairs += [[AnInlineKeyboardButton("⌯ ʙᴀᴄᴋ ⌯", callback_data=f"d.-1.{user_id}")]]
 
     return pairs
 
 
-@app.on_message(filters.command(["draw", "create", "imagine", "dream"]))
+                     
+
+
+
+@app.on_message(filters.command(["draw","create","imagine","dream"]))
 async def draw(_: app, m: t.Message):
     global Database
     prompt = getText(m)
     if prompt is None:
         return await m.reply_text("<code>ᴘʟᴇᴀsᴇ ᴘʀᴏᴠɪᴅᴇ ᴀ ᴘʀᴏᴍᴘᴛ. ᴜsᴀɢᴇ: /draw <prompt></code>")
     user = m.from_user
-    data = {'prompt': prompt, 'reply_to_id': m.id}
+    data = {'prompt':prompt,'reply_to_id':m.id}
     Database[user.id] = data
-    btns = paginate_models(0, Models, user.id)
+    btns = paginate_models(0,Models,user.id)
     await m.reply_text(
-        text=f"**ʜᴇʟʟᴏ {m.from_user.mention}**\n\n**sᴇʟᴇᴄᴛ ʏᴏᴜʀ ɪᴍᴀɢᴇ ɢᴇɴᴇʀᴀᴛᴏʀ ᴍᴏᴅᴇʟ**",
-        reply_markup=t.InlineKeyboardMarkup(btns)
-    )
-
+            text=f"**ʜᴇʟʟᴏ {m.from_user.mention}**\n\n**sᴇʟᴇᴄᴛ ʏᴏᴜʀ ɪᴍᴀɢᴇ ɢᴇɴᴇʀᴀᴛᴏʀ ᴍᴏᴅᴇʟ**",
+            reply_markup=t.InlineKeyboardMarkup(btns)
+            )
 
 @app.on_callback_query(filters.regex(pattern=r"^d.(.*)"))
-async def selectModel(_: app, query: t.CallbackQuery):
+async def selectModel(_:app,query:t.CallbackQuery):
     global Database
     data = query.data.split('.')
     auth_user = int(data[-1])
@@ -146,24 +158,24 @@ async def selectModel(_: app, query: t.CallbackQuery):
             next_page = int(data[2])
             await query.edit_message_reply_markup(
                 t.InlineKeyboardMarkup(
-                    paginate_models(next_page + 1, Models, auth_user)
+                    paginate_models(next_page + 1,Models,auth_user)
+                    )
                 )
-            )
         elif data[1] == "left":
             curr_page = int(data[2])
             await query.edit_message_reply_markup(
                 t.InlineKeyboardMarkup(
-                    paginate_models(curr_page - 1, Models, auth_user)
+                    paginate_models(curr_page - 1,Models,auth_user)
                 )
             )
         return
     modelId = int(data[1])
     await query.edit_message_text("**ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ, ɢᴇɴᴇʀᴀᴛɪɴɢ ʏᴏᴜʀ ɪᴍᴀɢᴇ.**")
-    promptData = Database.get(auth_user, None)
+    promptData = Database.get(auth_user,None)
     if promptData is None:
         return await query.edit_message_text("sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ @jarvis2O !!.")
-    img_url = await ImageGeneration(modelId, promptData['prompt'])
-    if img_url is None or img_url == 2 or img_url == 1:
+    img_url = await ImageGeneration(modelId,promptData['prompt'])
+    if img_url is None or img_url == 2 or img_url ==1:
         return await query.edit_message_text("sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ @jarvis2O !!")
     elif img_url == 69:
         return await query.edit_message_text("ɴsғᴡ ɴᴏᴛ ᴀʟʟᴏᴡᴇᴅ !")
@@ -171,7 +183,7 @@ async def selectModel(_: app, query: t.CallbackQuery):
     modelName = [i['name'] for i in Models if i['id'] == modelId]
     for i in img_url:
         images.append(t.InputMediaPhoto(i))
-    images[-1] = t.InputMediaPhoto(img_url[-1], caption=f"Your Prompt:\n`{promptData['prompt']}`")
+    images[-1] = t.InputMediaPhoto(img_url[-1],caption=f"Your Prompt:\n`{promptData['prompt']}`")
     await query.message.delete()
     try:
         del Database[auth_user]
@@ -181,4 +193,5 @@ async def selectModel(_: app, query: t.CallbackQuery):
         chat_id=query.message.chat.id,
         media=images,
         reply_to_message_id=promptData['reply_to_id']
+        
     )
