@@ -1,13 +1,15 @@
-import asyncio, os, time, aiohttp
+import asyncio
+import os
+import aiohttp
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from asyncio import sleep
-from ANNIEMUSIC import app
 from pyrogram import filters, Client, enums
 from pyrogram.enums import ParseMode
 from pyrogram.types import *
 from typing import Union, Optional
 import random
+from ANNIEMUSIC import app
 
 anniephoto = [
     "https://telegra.ph/file/07fd9e0e34bc84356f30d.jpg",
@@ -110,7 +112,9 @@ async def userinfo(_, message):
     user_id = message.from_user.id
 
     if message.command[0] in ["/info", "!info", ".info"]:
-        await app.send_message(chat_id, "💻")
+        await app.send_message(chat_id, "💻")  # Sending 💻 emoji first
+        await asyncio.sleep(0.5)  # Delay for better visual separation
+        await app.send_message(chat_id, "INFO")  # Sending "INFO" after the emoji
         return
 
     if not message.reply_to_message and len(message.command) == 2:
@@ -207,4 +211,3 @@ async def userinfo(_, message):
                 id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
         except Exception as e:
             await message.reply_text(str(e))
-            
