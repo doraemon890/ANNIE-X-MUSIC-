@@ -1,4 +1,4 @@
-</h2>
+
 <details>
 <summary><b>ＡＢＯＵＴ ＲＥＰＯＳＩＴＯＲＹ</b></summary>
 <br>
