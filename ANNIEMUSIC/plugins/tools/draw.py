@@ -4,12 +4,12 @@ from pyrogram.types import InlineKeyboardButton
 from math import ceil
 import asyncio
 from ANNIEMUSIC import app
+from pyrogram import Client as AsyncClient
 
 api = ApiClient()
 Models = api.getModels()['models']['image']
 Database = {}
 client = AsyncClient()  # Create a single instance of AsyncClient
-
 
 async def ImageGeneration(model, prompt):
     try:
