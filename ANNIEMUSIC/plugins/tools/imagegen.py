@@ -1,5 +1,6 @@
 import time
-from pyrogram import ChatAction, filters
+from pyrogram import filters
+from pyrogram.enums import ChatAction
 from ANNIEMUSIC import app
 from pyrogram.types import Message
 import openai
