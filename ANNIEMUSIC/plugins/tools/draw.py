@@ -1,48 +1,43 @@
 from pyrogram import Client, filters, types as t
-from lexica import Client as ApiClient, AsyncClient
+from lexica import Client as ApiClient
 from pyrogram.types import InlineKeyboardButton
 from math import ceil
 import asyncio
 from ANNIEMUSIC import app
 
-
-
 api = ApiClient()
 Models = api.getModels()['models']['image']
-
 Database = {}
+client = AsyncClient()  # Create a single instance of AsyncClient
 
 
-
-
-async def ImageGeneration(model,prompt):
+async def ImageGeneration(model, prompt):
     try:
-        client = AsyncClient()
-        output = await client.generate(model,prompt,"")
+        output = await client.generate(model, prompt, "")
         if output['code'] != 1:
             return 2
         elif output['code'] == 69:
             return output['code']
-        task_id, request_id = output['task_id'],output['request_id']
-        await asyncio.sleep(20)
+        task_id, request_id = output['task_id'], output['request_id']
+        await asyncio.sleep(10)  # Adjust sleep time if necessary
         tries = 0
         image_url = None
-        resp = await client.getImages(task_id,request_id)
         while True:
+            resp = await client.getImages(task_id, request_id)
             if resp['code'] == 2:
                 image_url = resp['img_urls']
                 break
             if tries > 15:
                 break
-            await asyncio.sleep(5)
-            resp = await client.getImages(task_id,request_id)
+            await asyncio.sleep(2)  # Adjust sleep time if necessary
             tries += 1
-            continue
         return image_url
     except Exception as e:
-        raise Exception(f"ғᴀɪʟᴇᴅ ᴛᴏ ɢᴇɴᴇʀᴀᴛᴇ ᴛʜᴇ ɪᴍᴀɢᴇ: {e}")
-    finally:
-        await client.close()
+        raise Exception(f"Failed to generate the image: {e}")
+
+
+# Remaining code remains the same
+
       
 
 def getText(message):
