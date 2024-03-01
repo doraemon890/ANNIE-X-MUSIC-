@@ -7,7 +7,7 @@ from pyrogram import filters, Client, enums
 from pyrogram.types import *
 from typing import Union, Optional
 import random
-
+from ANNIEMUSIC import app
 anniephoto = [
     "https://telegra.ph/file/07fd9e0e34bc84356f30d.jpg",
     "https://telegra.ph/file/3c4de59511e179018f902.jpg",
