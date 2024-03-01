@@ -149,11 +149,11 @@ async def userinfo(_, message):
                 
             await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
                 id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
-        except Exception as e:
-            await message.reply_text(str(e))        
+    except Exception as e:
+            await message.reply_text(str(e))    
       
-    elif not message.reply_to_message:
-        try:
+            elif not message.reply_to_message:
+    try:
             user_info = await app.get_chat(user_id)
             user = await app.get_users(user_id)
             status = await userstatus(user.id)
@@ -180,12 +180,12 @@ async def userinfo(_, message):
                 
             await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
                 id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
-        except Exception as e:
+           except Exception as e:
             await message.reply_text(str(e))
 
     elif message.reply_to_message:
-        user_id = message.reply_to_message.from_user.id
-        try:
+    user_id = message.reply_to_message.from_user.id
+    try:
             user_info = await app.get_chat(user_id)
             user = await app.get_users(user_id)
             status = await userstatus(user.id)
@@ -214,4 +214,3 @@ async def userinfo(_, message):
                 id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
         except Exception as e:
             await message.reply_text(str(e))
-                
