@@ -9,7 +9,6 @@ from pyrogram.enums import ParseMode
 from pyrogram.types import *
 from typing import Union, Optional
 import random
-from ANNIEMUSIC import app
 
 anniephoto = [
     "https://telegra.ph/file/07fd9e0e34bc84356f30d.jpg",
@@ -112,9 +111,7 @@ async def userinfo(_, message):
     user_id = message.from_user.id
 
     if message.command[0] in ["/info", "!info", ".info"]:
-        await app.send_message(chat_id, "💻")  # Sending 💻 emoji first
-        await asyncio.sleep(0.5)  # Delay for better visual separation
-        await app.send_message(chat_id, "INFO")  # Sending "INFO" after the emoji
+        await app.send_message(chat_id, "💻 INFO")  # Sending 💻 emoji and INFO as a reply
         return
 
     if not message.reply_to_message and len(message.command) == 2:
