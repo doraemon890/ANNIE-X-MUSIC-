@@ -1,12 +1,12 @@
 import time
-from pyrogram import ChatAction
-from pyrogram import filters
+from pyrogram import ChatAction, filters
 from ANNIEMUSIC import app
 from pyrogram.types import Message
 import openai
 from PIL import Image, ImageDraw, ImageFont
 import requests
-
+from io import BytesIO
+import config
 
 openai.api_key = config.GPT_API
 
