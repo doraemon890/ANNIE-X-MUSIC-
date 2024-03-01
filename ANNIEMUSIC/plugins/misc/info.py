@@ -3,7 +3,6 @@ import os
 import aiohttp
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-from ANNIEMUSIC import app
 from pyrogram import filters, Client, enums
 from pyrogram.types import *
 from typing import Union, Optional
@@ -83,6 +82,7 @@ async def userinfo(_, message):
     user_id = message.from_user.id
     reply_message = message.reply_to_message
     msg = await message.reply_text("💻")
+    await asyncio.sleep(2)
     await msg.delete()
 
     try:
@@ -90,89 +90,118 @@ async def userinfo(_, message):
             user_id = message.text.split(None, 1)[1]
         elif reply_message:
             user_id = reply_message.from_user.id
-        
-        if not reply_message:
-            user_info = await app.get_chat(user_id)
-            user = await app.get_users(user_id)
-            status = await get_user_status(user.id)
-            id = user_info.id
-            dc_id = user.dc_id
-            first_name = user_info.first_name 
-            last_name = user_info.last_name if user_info.last_name else "No last name"
-            username = user_info.username if user_info.username else "No Username"
-            mention = user.mention
-            bio = user_info.bio if user_info.bio else "No bio set"
-            
-          if user.photo:
-    # User has a profile photo
-    photo = await app.download_media(user.photo.big_file_id)
-    welcome_photo = await get_userinfo_img(
-        bg_path=bg_path,
-        font_path=font_path,
-        user_id=user.id,
-        profile_path=photo,
-    )
+
+       if not reply_message:
+    user_info = await app.get_chat(user_id)
+    user = await app.get_users(user_id)
+    status = await get_user_status(user.id)
+    id = user_info.id
+    dc_id = user.dc_id
+    first_name = user_info.first_name 
+    last_name = user_info.last_name if user_info.last_name else "No last name"
+    username = user_info.username if user_info.username else "No Username"
+    mention = user.mention
+    bio = user_info.bio if user_info.bio else "No bio set"
+
+    if user.photo:
+        # User has a profile photo
+        photo = await app.download_media(user.photo.big_file_id)
+        welcome_photo = await get_userinfo_img(
+            bg_path=bg_path,
+            font_path=font_path,
+            user_id=user.id,
+            profile_path=photo,
+        )
+    else:
+        # User doesn't have a profile photo, use anniephoto directly
+        welcome_photo = random.choice(anniephoto)
+
+    try:
+         if not reply_message:
+    if len(message.command) == 2:
+        user_id = message.text.split(None, 1)[1]
+    else:
+        # Handle the case when the command does not contain a user ID
+        await message.reply_text("Please provide a user ID.")
+        return
 else:
-    # User doesn't have a profile photo, use anniephoto directly
-    welcome_photo = random.choice(anniephoto)
+    user_id = reply_message.from_user.id
 
 try:
-    if not reply_message and len(message.command) == 2:
-        user_id = message.text.split(None, 1)[1]
-    elif reply_message:
-        user_id = reply_message.from_user.id
-    elif not message.reply_to_message:
-        user_info = await app.get_chat(user_id)
-        user = await app.get_users(user_id)
-        status = await userstatus(user.id)
-        id = user_info.id
-        dc_id = user.dc_id
-        first_name = user_info.first_name 
-        last_name = user_info.last_name if user_info.last_name else "No last name"
-        username = user_info.username if user_info.username else "No Username"
-        mention = user.mention
-        bio = user_info.bio if user_info.bio else "No bio set"
-        if user.photo:
-            # User has a profile photo
-            photo = await app.download_media(user.photo.big_file_id)
-            welcome_photo = await get_userinfo_img(
-                bg_path=bg_path,
-                font_path=font_path,
-                user_id=user.id,
-                profile_path=photo,
-            )
-        else:
-            # User doesn't have a profile photo, use anniephoto directly
-            welcome_photo = random.choice(anniephoto)
-        await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
-            id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
+    user_info = await app.get_chat(user_id)
+    user = await app.get_users(user_id)
+    status = await get_user_status(user.id)
+    id = user_info.id
+    dc_id = user.dc_id
+    first_name = user_info.first_name 
+    last_name = user_info.last_name if user_info.last_name else "No last name"
+    username = user_info.username if user_info.username else "No Username"
+    mention = user.mention
+    bio = user_info.bio if user_info.bio else "No bio set"
+
+    if user.photo:
+        # User has a profile photo
+        photo = await app.download_media(user.photo.big_file_id)
+        welcome_photo = await get_userinfo_img(
+            bg_path=bg_path,
+            font_path=font_path,
+            user_id=user.id,
+            profile_path=photo,
+        )
+    else:
+        # User doesn't have a profile photo, use anniephoto directly
+        welcome_photo = random.choice(anniephoto)
+
+    await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
+        id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
 except Exception as e:
     await message.reply_text(str(e))
-            
-            await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
-                id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
-        
-        elif reply_message:
-            user_id = reply_message.from_user.id
-            user_info = await app.get_chat(user_id)
-            user = await app.get_users(user_id)
-            status = await get_user_status(user.id)
-            id = user_info.id
-            dc_id = user.dc_id
-            first_name = user_info.first_name 
-            last_name = user_info.last_name if user_info.last_name else "No last name"
-            username = user_info.username if user_info.username else "No Username"
-            mention = user.mention
-            bio = user_info.bio if user_info.bio else "No bio set"
-            
+
+        await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
+            id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
+    except Exception as e:
+        await message.reply_text(str(e))
+
+elif reply_message:
+    user_id = reply_message.from_user.id
+    user_info = await app.get_chat(user_id)
+    user = await app.get_users(user_id)
+    status = await get_user_status(user.id)
+    id = user_info.id
+    dc_id = user.dc_id
+    first_name = user_info.first_name 
+    last_name = user_info.last_name if user_info.last_name else "No last name"
+    username = user_info.username if user_info.username else "No Username"
+    mention = user.mention
+    bio = user_info.bio if user_info.bio else "No bio set"
+
+    if user.photo:
+        photo = await app.download_media(user.photo.big_file_id)
+        welcome_photo = await get_userinfo_img(bg_path=bg_path, font_path=font_path, user_id=user.id, profile_path=photo)
+    else:
+        welcome_photo = random.choice(anniephoto)
+
+    try:
+        await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
+            id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
+    except Exception as e:
+        await message.reply_text(str(e))
+
             if user.photo:
+                # User has a profile photo
                 photo = await app.download_media(user.photo.big_file_id)
-                welcome_photo = await get_userinfo_img(bg_path=bg_path, font_path=font_path, user_id=user.id, profile_path=photo)
+                welcome_photo = await get_userinfo_img(
+                    bg_path=bg_path,
+                    font_path=font_path,
+                    user_id=user.id,
+                    profile_path=photo,
+                )
             else:
+                # User doesn't have a profile photo, use anniephoto directly
                 welcome_photo = random.choice(anniephoto)
-            
+
             await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
                 id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
-        
+            
     except Exception as e:
         await message.reply_text(str(e))
