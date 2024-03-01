@@ -24,7 +24,7 @@ pic = "https://telegra.ph/file/2c6d1a6f78eba6199933a.jpg"
 @app.on_message(filters.group & filters.group, group=6)
 def today_watcher(_, message):
     chat_id = message.chat.id
-    user_id = message.from_user_id
+    user_id = message.from_user
     if chat_id in today and user_id in today[chat_id]:
         today[chat_id][user_id]["total_messages"] += 1
     else:
@@ -38,7 +38,7 @@ def today_watcher(_, message):
 
 @app.on_message(filters.group & filters.group, group=11)
 def _watcher(_, message):
-    user_id = message.from_user_id    
+    user_id = message.from_user    
     user_data.setdefault(user_id, {}).setdefault("total_messages", 0)
     user_data[user_id]["total_messages"] += 1    
     collection.update_one({"_id": user_id}, {"$inc": {"total_messages": 1}}, upsert=True)
