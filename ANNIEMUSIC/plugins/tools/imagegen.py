@@ -31,10 +31,9 @@ async def get_draw(app, message: Message):
 def generate_image(text, image_size=(1024, 1024)):
     openai.api_key = config.GPT_API
     response = openai.Image.create(
-        engine="davinci",
         prompt=text,
-        max_images=1,
-        temperature=0.7
+        n=1,
+        size="1024x1024"
     )
 
     image_url = response['images'][0]['url']
