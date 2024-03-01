@@ -4,7 +4,7 @@ from pyrogram.enums import ChatAction
 from ANNIEMUSIC import app
 from pyrogram.types import Message
 import openai
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 import requests
 from io import BytesIO
 import config
@@ -12,7 +12,7 @@ import config
 openai.api_key = config.GPT_API
 
 @app.on_message(filters.command(["getdraw"], prefixes=["+", ".", "/", "!"]))
-async def chat(app, message: Message):
+async def get_draw(app, message: Message):
     try:
         start_time = time.time()
         await app.send_chat_action(message.chat.id, ChatAction.TYPING)
@@ -22,20 +22,14 @@ async def chat(app, message: Message):
                 "**ʜᴇʟʟᴏ sɪʀ ɪ ᴀᴍ ᴊᴀʀᴠɪs & \nʜᴏᴡ ᴄᴀɴ ɪ ʜᴇʟᴘ ʏᴏᴜ ᴛᴏᴅᴀʏ**")
         else:
             a = message.text.split(' ', 1)[1]
-            MODEL = "text-davinci-003"
-            resp = openai.ChatCompletion.create(
-                model=MODEL,
-                messages=[{"role": "user", "content": a}],
-                max_tokens=50
-            )
-            image_text = resp.choices[0].message['content']
-            image = generate_image(image_text)
+            image = generate_image(a)
             await app.send_photo(chat_id=message.chat.id, photo=image)
         
     except Exception as e:
         await message.reply_text(f"**ᴇʀʀᴏʀ**: {e} ")
 
-def generate_image(text, image_size=(400, 200)):
+def generate_image(text, image_size=(1024, 1024)):
+    openai.api_key = config.OPENAI_API_KEY
     response = openai.Image.create(
         engine="davinci",
         prompt=text,
