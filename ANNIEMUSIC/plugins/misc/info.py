@@ -21,21 +21,13 @@ anniephoto = [
 
 
 get_font = lambda font_size, font_path: ImageFont.truetype(font_path, font_size)
-resize_text = (
-    lambda text_size, text: (text[:text_size] + "...").upper()
-    if len(text) > text_size
-    else text.upper()
-)
+resize_text = lambda text_size, text: (text[:text_size] + "...").upper() if len(text) > text_size else text.upper()
+
 
 # --------------------------------------------------------------------------------- #
 
 
-async def get_userinfo_img(
-    bg_path: str,
-    font_path: str,
-    user_id: Union[int, str],    
-    profile_path: Optional[str] = None
-):
+async def get_userinfo_img(bg_path: str, font_path: str, user_id: Union[int, str], profile_path: Optional[str] = None):
     bg = Image.open(bg_path)
 
     if profile_path:
@@ -89,22 +81,22 @@ INFO_TEXT = """**
 """
 
 # --------------------------------------------------------------------------------- #
-
-async def userstatus(user_id):
-   try:
-      user = await app.get_users(user_id)
-      x = user.status
-      if x == enums.UserStatus.RECENTLY:
-         return "Recently."
-      elif x == enums.UserStatus.LAST_WEEK:
-          return "Last week."
-      elif x == enums.UserStatus.LONG_AGO:
-          return "Long time ago."
-      elif x == enums.UserStatus.OFFLINE:
-          return "Offline."
-      elif x == enums.UserStatus.ONLINE:
-         return "Online."
-   except:
+async def get_user_status(user_id):
+    try:
+        user = await app.get_users(user_id)
+        status = user.status
+        if status == enums.UserStatus.RECENTLY:
+            return "Recently."
+        elif status == enums.UserStatus.LAST_WEEK:
+            return "Last week."
+        elif status == enums.UserStatus.LONG_AGO:
+            return "Long time ago."
+        elif status == enums.UserStatus.OFFLINE:
+            return "Offline."
+        elif status == enums.UserStatus.ONLINE:
+            return "Online."
+    except Exception as e:
+        print(f"Error getting user status: {e}")
         return "**sᴏᴍᴇᴛʜɪɴɢ ᴡʀᴏɴɢ ʜᴀᴘᴘᴇɴᴇᴅ !**"
     
 
@@ -112,14 +104,20 @@ async def userstatus(user_id):
 
 
 
-@app.on_message(filters.command(["info", "userinfo"], prefixes=["/", "!","."]))
+@app.on_message(filters.command(["info", "userinfo"], prefixes=["/", "!", "."]))
 async def userinfo(_, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
-    
-    if not message.reply_to_message and len(message.command) == 2:
-        try:
+    reply_message = message.reply_to_message
+
+    msg = await message.reply_text("💻")
+    await msg.delete()
+
+    try:
+        if not reply_message and len(message.command) == 2:
             user_id = message.text.split(None, 1)[1]
+        elif reply_message:
+            user_id = reply_message.from_user.id
             user_info = await app.get_chat(user_id)
             user = await app.get_users(user_id)
             status = await userstatus(user.id)
