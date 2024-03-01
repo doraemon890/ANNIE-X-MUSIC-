@@ -29,7 +29,7 @@ async def get_draw(app, message: Message):
         await message.reply_text(f"**ᴇʀʀᴏʀ**: {e} ")
 
 def generate_image(text, image_size=(1024, 1024)):
-    openai.api_key = config.OPENAI_API_KEY
+    openai.api_key = config.GPT_API
     response = openai.Image.create(
         engine="davinci",
         prompt=text,
