@@ -2,7 +2,6 @@ import asyncio
 import datetime
 from ANNIEMUSIC import app
 from pyrogram import Client
-from cele import CELEBRATION_VID_URL
 from ANNIEMUSIC.utils.database import get_served_chats
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -28,6 +27,10 @@ BUTTON = InlineKeyboardMarkup(
         ]
     ]
 )
+
+
+CELEBRATION_VID_URL = "https://github.com/doraemon890/ANNIE-X-MUSIC-/assets/155803358/4671acf4-d356-4698-baad-43ef62438437"
+
 
 async def send_message_to_chats():
     try:
