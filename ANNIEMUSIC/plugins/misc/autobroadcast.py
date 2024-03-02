@@ -2,20 +2,24 @@ import asyncio
 import datetime
 from ANNIEMUSIC import app
 from pyrogram import Client
-from config import START_IMG_URL
+from cele import CELEBRATION_VID_URL
 from ANNIEMUSIC.utils.database import get_served_chats
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-MESSAGE = f"""**๏ ᴛʜɪs ɪs ᴀᴅᴠᴀɴᴄᴇᴅ ᴍᴜsɪᴄ ᴘʟᴀʏᴇʀ ʙᴏᴛ ғᴏʀ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴘs + ᴄʜᴀɴɴᴇʟs ᴠᴄ. 💌
+MESSAGE = f"""💗  ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴs ᴛᴏ ᴀʟʟ 💗
 
-🎧 ᴘʟᴀʏ + ᴠᴘʟᴀʏ + ᴄᴘʟᴀʏ 🎧
+ᴀɴɴɪᴇ ᴍᴜsɪᴄ + ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʀᴏʙᴏᴛ (https://t.me/Annie_X_music_bot)   
+                    
+                          ᴜsᴇʀs (tg://settings/) 
 
-➥ sᴜᴘᴘᴏʀᴛᴇᴅ ᴡᴇʟᴄᴏᴍᴇ - ʟᴇғᴛ ɴᴏᴛɪᴄᴇ, ᴛᴀɢᴀʟʟ, ᴠᴄᴛᴀɢ, ʙᴀɴ - ᴍᴜᴛᴇ, sʜᴀʏʀɪ, ʟʏʀɪᴄs, sᴏɴɢ - ᴠɪᴅᴇᴏ ᴅᴏᴡɴʟᴏᴀᴅ, ᴇᴛᴄ... 💕
+❥ ᴏᴜʀ ᴀɴɴɪᴇ ᴍᴜsɪᴄ ʀᴏʙᴏᴛ ʜᴀs ʀᴇᴀᴄʜᴇᴅ  ᴀ ᴍɪʟᴇsᴛᴏɴᴇ ᴏғ ᴄᴏᴍᴘʟᴇᴛɪɴɢ ᴏᴠᴇʀ 𝟻𝟶𝟶 ᴄʜᴀᴛs.🌷 
 
-🔐ᴜꜱᴇ » [/start](https://t.me/{app.username}?start=help) ᴛᴏ ᴄʜᴇᴄᴋ ʙᴏᴛ
+❥ ᴛʜᴀɴᴋ ʏᴏᴜ ♔ ғᴏʀ ʏᴏᴜʀ ᴄᴏɴᴛɪɴᴜᴇᴅ sᴜᴘᴘᴏʀᴛ ᴀɴᴅ ᴇɴɢᴀɢᴇᴍᴇɴᴛ ᴡɪᴛʜ ᴏᴜʀ ɪɴɴᴏᴠᴀᴛɪᴠᴇ ᴍᴜsɪᴄ + ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʀᴏʙᴏᴛ . 🥀
 
-➲ ʙᴏᴛ :** @{app.username}"""
+❥ ʟᴇᴛ's ᴋᴇᴇᴘ ᴛʜᴇ ᴄᴇʟᴇʙʀᴀᴛɪᴏɴ ɢᴏɪɴɢ ᴀs ᴡᴇ ʟᴏᴏᴋ ғᴏʀᴡᴀʀᴅ ᴛᴏ ᴍᴀɴʏ ᴍᴏʀᴇ ᴇxᴄɪᴛɪɴɢ ɪɴᴛᴇʀᴀᴄᴛɪᴏɴs ᴡɪᴛʜ ᴀɴɴɪᴇ ʀᴏʙᴏᴛ ɪɴ ᴛʜᴇ ғᴜᴛᴜʀᴇ ! 🦋
+
+       🌷  sᴜᴘᴘᴏʀᴛ (https://t.me/+143OoX4JfpQ3OGNl)  🌷    🎟 sᴛᴀᴛs (https://t.me/CDX_WORLD/14)  🎟"""
 
 BUTTON = InlineKeyboardMarkup(
     [
@@ -33,7 +37,7 @@ async def send_message_to_chats():
             chat_id = chat_info.get('chat_id')
             if isinstance(chat_id, int):  # Check if chat_id is an integer
                 try:
-                    await app.send_photo(chat_id, photo=START_IMG_URL, caption=MESSAGE, reply_markup=BUTTON)
+                    await app.send_video(chat_id, video=CELEBRATION_VID_URL, caption=MESSAGE, reply_markup=BUTTON)
                     await asyncio.sleep(3)  # Sleep for 1 second between sending messages
                 except Exception as e:
                     pass  # Do nothing if an error occurs while sending message
