@@ -11,7 +11,8 @@ def track_markup(_, user_id, channel, fplay):
 
         [
             InlineKeyboardButton(
-                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
+                text=f"{played} {bar} {dur}",                 
+                callback_data="GetTimer",
             ),
             ],
             [
@@ -104,8 +105,9 @@ def stream_markup(_, chat_id):
     buttons  = [
 
         [
-            InlineKeyboardButton(
-                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
+          InlineKeyboardButton(
+               text=f"{played} {bar} {dur}",                 
+               callback_data="GetTimer",
             ),
           ],
           [
@@ -250,7 +252,8 @@ def queue_markup(_, videoid, chat_id):
     buttons = [
         [
             InlineKeyboardButton(
-                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
+                text=f"{played} {bar} {dur}",                 
+                callback_data="GetTimer",
             ),
           ],
           [
@@ -328,7 +331,8 @@ def panel_markup_2(_, videoid, chat_id):
     buttons = [
         [
             InlineKeyboardButton(
-                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
+                text=f"{played} {bar} {dur}",                 
+                callback_data="GetTimer",
             ),
         ],
         [
