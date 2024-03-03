@@ -11,8 +11,7 @@ def track_markup(_, user_id, channel, fplay):
 
         [
             InlineKeyboardButton(
-                text=_["S_B_5"],
-                url=f"https://t.me/{app.username}?startgroup=true",
+                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
             ),
             ],
             [
@@ -106,8 +105,7 @@ def stream_markup(_, chat_id):
 
         [
             InlineKeyboardButton(
-                text=_["S_B_5"],
-                url=f"https://t.me/{app.username}?startgroup=true",
+                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
             ),
           ],
           [
@@ -252,8 +250,7 @@ def queue_markup(_, videoid, chat_id):
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["S_B_5"],
-                url=f"https://t.me/{app.username}?startgroup=true",
+                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
             ),
           ],
           [
@@ -331,8 +328,7 @@ def panel_markup_2(_, videoid, chat_id):
     buttons = [
         [
             InlineKeyboardButton(
-                text=_["S_B_5"],
-                url=f"https://t.me/{app.username}?startgroup=true",
+                InlineKeyboardButton(                 text=f"{played} {bar} {dur}",                 callback_data="GetTimer",
             ),
         ],
         [
