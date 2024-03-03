@@ -4,7 +4,7 @@ import asyncio
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
-
+from ANNIEMUSIC.utils.database import get_assistant
 import config
 from ANNIEMUSIC import Apple, Resso, SoundCloud, Spotify, Telegram, YouTube, app
 from ANNIEMUSIC.core.call import JARVIS
