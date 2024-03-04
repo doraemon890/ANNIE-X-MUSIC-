@@ -1,7 +1,11 @@
 import asyncio
 from pyrogram import filters
-from ANNIEMUSIC import app, userbot
+from ANNIEMUSIC.core.userbot import Userbot
+from ANNIEMUSIC import app
 from config import OWNER_ID
+
+# Assuming Userbot is defined elsewhere
+userbot = Userbot()
 
 BOT_LIST = ["Annie_X_music_bot"]
 
