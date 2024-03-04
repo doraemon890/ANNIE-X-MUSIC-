@@ -18,7 +18,7 @@ MESSAGE = f"""**💗  ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴs ᴛᴏ ᴀʟʟ 💗
 
 ❥ ʟᴇᴛ's ᴋᴇᴇᴘ ᴛʜᴇ ᴄᴇʟᴇʙʀᴀᴛɪᴏɴ ɢᴏɪɴɢ ᴀs ᴡᴇ ʟᴏᴏᴋ ғᴏʀᴡᴀʀᴅ ᴛᴏ ᴍᴀɴʏ ᴍᴏʀᴇ ᴇxᴄɪᴛɪɴɢ ɪɴᴛᴇʀᴀᴄᴛɪᴏɴs ᴡɪᴛʜ ᴀɴɴɪᴇ ʀᴏʙᴏᴛ ɪɴ ᴛʜᴇ ғᴜᴛᴜʀᴇ ! 🦋
 
-       '[🌷 sᴜᴘᴘᴏʀᴛ 🌷](https://t.me/+143OoX4JfpQ3OGNl)'      '([🎟 sᴛᴀᴛs 🎟](https://t.me/CDX_WORLD/14))' """
+       '[🌷 sᴜᴘᴘᴏʀᴛ 🌷](https://t.me/+143OoX4JfpQ3OGNl)'      '[🎟 sᴛᴀᴛs 🎟](https://t.me/CDX_WORLD/14)' """
 
 BUTTON = InlineKeyboardMarkup(
     [
