@@ -1,13 +1,13 @@
 import asyncio
 from pyrogram import filters
 from ANNIEMUSIC import app, userbot
-from ANNIEMUSIC.misc import SUDOERS
+from config import OWNER_ID
 
 BOT_LIST = ["Annie_X_music_bot"]
 
 
 
-@app.on_message(filters.command("botschk") & filters.user(SUDOERS))
+@app.on_message(filters.command("botschk") & filters.user(OWNER_ID))
 async def bots_chk(app, message):
     msg = await message.reply_photo(photo="https://telegra.ph/file/e7a1c0481617facf5fb37.jpg", caption="**ᴄʜᴇᴄᴋɪɴɢ ʙᴏᴛs sᴛᴀᴛs ᴀʟɪᴠᴇ ᴏʀ ᴅᴇᴀᴅ...**")
     response = "**ʙᴏᴛs sᴛᴀᴛᴜs ᴅᴇᴀᴅ ᴏʀ ᴀʟɪᴠᴇ ᴄʜᴇᴄᴋᴇʀ**\n\n"
@@ -32,7 +32,7 @@ async def bots_chk(app, message):
 
 
 
-@app.on_message(filters.command("addbot") & filters.user(SUDOERS))
+@app.on_message(filters.command("addbot") & filters.user(OWNER_ID))
 async def add_bot(app, message):
     bruh = message.text.split(maxsplit=1)[1]
     data = bruh.split(" ")
@@ -50,7 +50,7 @@ async def add_bot(app, message):
 
 
 
-@app.on_message(filters.command("rmbot") & filters.user(SUDOERS))
+@app.on_message(filters.command("rmbot") & filters.user(OWNER_ID))
 async def remove_bot(app, message):
     bruh = message.text.split(maxsplit=1)[1]
     data = bruh.split(" ")
