@@ -8,9 +8,9 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 MESSAGE = f"""**💗  ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴs ᴛᴏ ᴀʟʟ 💗
 
-  '[ᴀɴɴɪᴇ ᴍᴜsɪᴄ + ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʀᴏʙᴏᴛ](https://t.me/Annie_X_music_bot)'   
+  [ᴀɴɴɪᴇ ᴍᴜsɪᴄ + ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʀᴏʙᴏᴛ](https://t.me/Annie_X_music_bot)   
                     
-                          '[ᴜsᴇʀs](tg://settings/)' 
+                          [ᴜsᴇʀs](tg://settings/) 
 
 ❥ ᴏᴜʀ ᴀɴɴɪᴇ ᴍᴜsɪᴄ ʀᴏʙᴏᴛ ʜᴀs ʀᴇᴀᴄʜᴇᴅ  ᴀ ᴍɪʟᴇsᴛᴏɴᴇ ᴏғ ᴄᴏᴍᴘʟᴇᴛɪɴɢ ᴏᴠᴇʀ 𝟻𝟶𝟶 ᴄʜᴀᴛs.🌷 
 
@@ -18,7 +18,7 @@ MESSAGE = f"""**💗  ᴄᴏɴɢʀᴀᴛᴜʟᴀᴛɪᴏɴs ᴛᴏ ᴀʟʟ 💗
 
 ❥ ʟᴇᴛ's ᴋᴇᴇᴘ ᴛʜᴇ ᴄᴇʟᴇʙʀᴀᴛɪᴏɴ ɢᴏɪɴɢ ᴀs ᴡᴇ ʟᴏᴏᴋ ғᴏʀᴡᴀʀᴅ ᴛᴏ ᴍᴀɴʏ ᴍᴏʀᴇ ᴇxᴄɪᴛɪɴɢ ɪɴᴛᴇʀᴀᴄᴛɪᴏɴs ᴡɪᴛʜ ᴀɴɴɪᴇ ʀᴏʙᴏᴛ ɪɴ ᴛʜᴇ ғᴜᴛᴜʀᴇ ! 🦋
 
-       '[🌷 sᴜᴘᴘᴏʀᴛ 🌷](https://t.me/+143OoX4JfpQ3OGNl)'      '[🎟 sᴛᴀᴛs 🎟](https://t.me/CDX_WORLD/14)' """
+       [🌷 sᴜᴘᴘᴏʀᴛ 🌷](https://t.me/+143OoX4JfpQ3OGNl)      [🎟 sᴛᴀᴛs 🎟](https://t.me/CDX_WORLD/14) """
 
 BUTTON = InlineKeyboardMarkup(
     [
