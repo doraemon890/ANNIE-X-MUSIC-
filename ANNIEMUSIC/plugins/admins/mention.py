@@ -57,16 +57,26 @@ async def tag_all_users(_,message):
         except Exception:
             pass        
            
-@app.on_message(filters.command("cancel") & ~filters.private)
-async def cancelcmd(_, message):
-    chat_id = message.chat.id
-    if chat_id in SPAM_CHATS:
-        try :
-            SPAM_CHATS.remove(chat_id)
-        except Exception:
-            pass   
-        return await message.reply_text("**ᴛᴀɢ ᴀʟʟ sᴜᴄᴄᴇssғᴜʟʟʏ sᴛᴏᴘᴘᴇᴅ!**")     
-                                     
-    else :
-        await message.reply_text("**ɴᴏ ᴘʀᴏᴄᴇss ᴏɴɢᴏɪɴɢ!**")  
-        return       
+@@app.on_message(filters.command(["cancel"]))
+async def cancel_spam(client, message):
+    if not message.chat.id in spam_chats:
+        return await message.reply("𝐂𝐮𝐫𝐫𝐞𝐧𝐭𝐥𝐲 𝐈'𝐦 𝐍𝐨𝐭 ..")
+    is_admin = False
+    try:
+        participant = await client.get_chat_member(message.chat.id, message.from_user.id)
+    except UserNotParticipant:
+        is_admin = False
+    else:
+        if participant.status in (
+            ChatMemberStatus.ADMINISTRATOR,
+            ChatMemberStatus.OWNER
+        ):
+            is_admin = True
+    if not is_admin:
+        return await message.reply("𝐘𝐨𝐮 𝐀𝐫𝐞 𝐍𝐨𝐭 𝐀𝐝𝐦𝐢𝐧 𝐁𝐚𝐛𝐲")
+    else:
+        try:
+            spam_chats.remove(message.chat.id)
+        except:
+            pass
+        return await message.reply("**🦋ᴛᴀɢ ʀᴏᴋɴᴇ ᴡᴀʟᴇ ᴋɪ ᴍᴀᴀ ᴋᴀ ʙʜᴀʀᴏsᴀ ᴊᴇᴇᴛᴜ.....🫠**")
