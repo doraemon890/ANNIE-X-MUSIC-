@@ -207,7 +207,7 @@ async def mention_allvc(client, message):
 
 
 
-@app.on_message(filters.command(["gmstop", "gnstop", "cancel"]))
+@app.on_message(filters.command(["gmstop", "gnstop"]))
 async def cancel_spam(client, message):
     if not message.chat.id in spam_chats:
         return await message.reply("๏ ᴄᴜʀʀᴇɴᴛʟʏ ɪ'ᴍ ɴᴏᴛ ᴛᴀɢɢɪɴɢ ʙᴀʙʏ.")
