@@ -5,6 +5,8 @@ import asyncio
 import requests
 import wget
 import yt_dlp
+import config
+from config import *
 from youtubesearchpython import SearchVideos
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
@@ -12,6 +14,7 @@ from bs4 import BeautifulSoup
 from pyrogram import Client, filters
 from pyrogram.types import *
 from ANNIEMUSIC import app
+
 
 # ------------------------------------------------------------------------------- #
 # Function to download Pinterest videos
@@ -142,7 +145,7 @@ async def download_instagram_reel(client, message):
         else:
             await message.reply_text(f"Request failed with status code: {response.status_code}")
     except Exception as e:
-        await message.reply_text("Something went wrong, please try again later.")
+        await message.reply_text(f"Something went wrong: {e}")
 
 # --------------
 
