@@ -67,7 +67,7 @@ async def download_pinterest_video_command(client, message):
 
 # ------------------------------------------------------------------------------- #
 
-@app.on_message(filters.command("song"))
+@app.on_message(filters.command("audio"))
 def download_song(_, message):
     query = " ".join(message.command[1:])  
     print(query)
