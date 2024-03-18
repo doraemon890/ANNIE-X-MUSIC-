@@ -4,6 +4,7 @@ import os
 import asyncio
 import requests
 import wget
+import yt_dlp
 from youtubesearchpython import SearchVideos
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
@@ -240,4 +241,3 @@ __mod_name__ = "Vɪᴅᴇᴏ"
 __help__ = """ 
 /video to download video song
 /yt to download video song """
-
