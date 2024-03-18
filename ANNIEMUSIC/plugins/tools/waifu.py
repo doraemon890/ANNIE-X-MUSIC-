@@ -1,13 +1,6 @@
-import base64
-import os
 import requests
-from uuid import uuid4
-import aiohttp
-import httpx
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from ANNIEMUSIC import app
-import pyrogram
 
 # Waifu image functionality
 @app.on_message(filters.command("waifu"))
