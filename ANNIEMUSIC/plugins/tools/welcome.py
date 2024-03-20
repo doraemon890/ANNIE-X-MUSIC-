@@ -1,4 +1,5 @@
 from ANNIEMUSIC import app
+from pyrogram import filters
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from os import environ
@@ -15,39 +16,15 @@ from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 from asyncio import sleep
 from pyrogram import filters, Client, enums
 from pyrogram.enums import ParseMode
+from pyrogram import *
+from pyrogram.types import *
 from logging import getLogger
 from ANNIEMUSIC.utils.jarvis_ban import admin_filter
+import os
 from PIL import ImageDraw, Image, ImageFont, ImageChops
 from pyrogram import *
 from pyrogram.types import *
 from logging import getLogger
-from pyrogram import Client, filters
-import requests
-import random
-import os
-import re
-import asyncio
-import time
-from ANNIEMUSIC.utils.database import add_served_chat
-from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from ANNIEMUSIC.utils.database import get_assistant
-import asyncio
-from ANNIEMUSIC.misc import SUDOERS
-from ANNIEMUSIC.mongo.afkdb import PROCESS
-from pyrogram import Client, filters
-from pyrogram.errors import UserAlreadyParticipant
-from ANNIEMUSIC import app
-import asyncio
-import random
-from pyrogram import Client, filters
-from pyrogram.enums import ChatMemberStatus
-from pyrogram.errors import (
-    ChatAdminRequired,
-    InviteRequestSent,
-    UserAlreadyParticipant,
-    UserNotParticipant,
-)
-from ANNIEMUSIC.utils.database import get_assistant, is_active_chat
 
 LOGGER = getLogger(__name__)
 
@@ -89,16 +66,16 @@ def circle(pfp, size=(500, 500)):
     return pfp
 
 def welcomepic(pic, user, chatname, id, uname):
-    background = Image.open("ANNIEMUSIC/assets/annie/anniewel2.png")
+    background = Image.open("ANNIEMUSIC/assets/annie/anniewel.png")
     pfp = Image.open(pic).convert("RGBA")
     pfp = circle(pfp)
     pfp = pfp.resize((889, 873))
     draw = ImageDraw.Draw(background)
     font = ImageFont.truetype('ANNIEMUSIC/assets/annie/anniewel.ttf', size=105)
-    welcome_font = ImageFont.truetype('ANNIEMUSIC/assets/annie/anniewel.ttf', size=55)
-    draw.text((1844, 1043), f': {user}', fill=(238, 130, 238), font=font)
-    draw.text((1542, 1263), f': {id}', fill=(238, 130, 238), font=font)
-    draw.text((1920, 1502), f": {uname}", fill=(238, 130, 238), font=font)
+    welcome_font = ImageFont.truetype('ANNIEMUSIC/assets/annie/anniewel.ttf', size=52)
+    draw.text((1800, 1040), f': {user}', fill=(238, 130, 238), font=font)
+    draw.text((1560, 1270), f': {id}', fill=(238, 130, 238), font=font)
+    draw.text((2050, 1480), f": {uname}", fill=(238, 130, 238), font=font)
     pfp_position = (255, 330)
     background.paste(pfp, pfp_position, pfp)
     background.save(f"downloads/welcome#{id}.png")
@@ -189,4 +166,3 @@ async def greet_new_member(_, member: ChatMemberUpdated):
             )
         except Exception as e:
             LOGGER.error(e)
-
