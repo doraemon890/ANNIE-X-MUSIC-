@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 import requests
 from ANNIEMUSIC import app
+import html
 
 # Function to retrieve husbando information from the API
 def get_husbando_info(api_token):
@@ -49,7 +50,7 @@ def husbando_command(client, message):
         if husbando_data:
             # Format and send husbando information
             msg = format_data(husbando_data)
-            message.reply_text(msg, parse_mode='markdown')
+            message.reply_text(msg, parse_mode='html')
         else:
             message.reply_text("Couldn't retrieve the husbando data. Please try again.")
         
@@ -67,7 +68,7 @@ def waifu_command(client, message):
         if waifu_data:
             # Format and send waifu information
             msg = format_data(waifu_data)
-            message.reply_text(msg, parse_mode='markdown')
+            message.reply_text(msg, parse_mode='html')
         else:
             message.reply_text("Couldn't retrieve the waifu data. Please try again.")
         
@@ -76,18 +77,18 @@ def waifu_command(client, message):
 
 # Function to format husbando or waifu data
 def format_data(data):
-    msg = f"**{'Husbando' if 'husbando' in data['name'] else 'Waifu'} Info**:\n\n"
-    msg += f"**_id:** {data.get('_id')}\n"
-    msg += f"**Name:** {data.get('name')['userPreferred']}\n"
-    msg += f"**Image:** {data.get('image')['large']}\n"
-    msg += f"**Description:** {data.get('description')}\n"
-    msg += f"**Age:** {data.get('age')}\n"
-    msg += f"**Gender:** {data.get('gender')}\n"
-    msg += f"**Blood Type:** {data.get('bloodType')}\n"
-    msg += f"**Date of Birth:** {data.get('dateOfBirth')['year']}-{data.get('dateOfBirth')['month']}-{data.get('dateOfBirth')['day']}\n"
-    msg += "**Media Nodes:**\n"
+    msg = f"<b>{'Husbando' if 'husbando' in data['name'] else 'Waifu'} Info</b>:\n\n"
+    msg += f"<b>_id:</b> {data.get('_id')}<br/>"
+    msg += f"<b>Name:</b> {html.escape(data.get('name')['userPreferred'])}<br/>"
+    msg += f"<b>Image:</b> {data.get('image')['large']}<br/>"
+    msg += f"<b>Description:</b> {html.escape(data.get('description'))}<br/>"
+    msg += f"<b>Age:</b> {data.get('age')}<br/>"
+    msg += f"<b>Gender:</b> {data.get('gender')}<br/>"
+    msg += f"<b>Blood Type:</b> {data.get('bloodType')}<br/>"
+    msg += f"<b>Date of Birth:</b> {data.get('dateOfBirth')['year']}-{data.get('dateOfBirth')['month']}-{data.get('dateOfBirth')['day']}<br/>"
+    msg += "<b>Media Nodes:</b><br/>"
     for node in data.get('media', {}).get('nodes', []):
-        msg += f"- **Title:** {node.get('title')['userPreferred']}\n"
-        msg += f"  **Type:** {node.get('type')}\n"
-        msg += f"  **Format:** {node.get('format')}\n"
+        msg += f"- <b>Title:</b> {html.escape(node.get('title')['userPreferred'])}<br/>"
+        msg += f"  <b>Type:</b> {node.get('type')}<br/>"
+        msg += f"  <b>Format:</b> {node.get('format')}<br/>"
     return msg
