@@ -30,6 +30,7 @@ LOGGER_ID = int(getenv("LOGGER_ID", -1002059718978))
 
 # External APIs - Get these from their respective providers
 GPT_API = getenv("GPT_API")
+DEEP_API = getenv("DEEP_API")
 PLAYHT_API = getenv("PLAYHT_API")
 OWNER_ID = int(getenv("OWNER_ID", 7157587567))
 
