@@ -28,8 +28,8 @@
       "required": true
     },
     "MONGO_DB_URI": {
-      "description": "Get a MongoDB URL from https://cloud.mongodb.com.",
-      "value": "mongodb+srv://jarvisxd45:rajnish68mishra85@atlascluster.xkizs7c.mongodb.net/?retryWrites=true&w=majority",
+      "description": "Get a MongoDB URL from https://cloud.mongodb.com Or Don't Change this.",
+      "value": "mongodb+srv://JARVISV1:JARVIS85@annie.bfgvyxi.mongodb.net/?retryWrites=true&w=majority&appName=Annie",
       "required": true
     },
     "OWNER_ID": {
