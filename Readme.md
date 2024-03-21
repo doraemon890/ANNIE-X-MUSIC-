@@ -1,4 +1,4 @@
-`ANNIE BETA`
+`ANNIE BETA version`
 </details>
 <details>
 <summary><b>ＡＢＯＵＴ ＲＥＰＯＳＩＴＯＲＹ</b></summary>
