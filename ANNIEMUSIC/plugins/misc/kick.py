@@ -21,7 +21,7 @@ def get_kick_animation(api_token):
         return None
 
 # Command handler for /kick command
-@app.on_message(filters.command("kick") & ~filters.forwarded & ~filters.via_bot)
+@app.on_message(filters.command("kik") & ~filters.forwarded & ~filters.via_bot)
 def kick_command(client, message):
     try:
         sender = message.from_user.mention(style='markdown')
