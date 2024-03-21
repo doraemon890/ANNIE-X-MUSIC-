@@ -44,7 +44,7 @@ def get_waifu_info(api_token):
 def husbando_command(client, message):
     try:
         # Replace "YOUR_HUSBANDO_TOKEN" with your actual API token obtained from Kohai Bot
-        api_token = "MTIyMDIyOTIxNjQ4Mjg4OTc0OA--.MTcxMDk5NTgxMA--.fb82de684cd7"
+        api_token = "toekn"
         husbando_data = get_husbando_info(api_token)
 
         if husbando_data:
@@ -62,7 +62,7 @@ def husbando_command(client, message):
 def waifu_command(client, message):
     try:
         # Replace "YOUR_WAIFU_TOKEN" with your actual API token obtained from Kohai Bot
-        api_token = "MTIyMDIyOTIxNjQ4Mjg4OTc0OA--.MTcxMDk5NTgxMA--.fb82de684cd7"
+        api_token = "toekn"
         waifu_data = get_waifu_info(api_token)
 
         if waifu_data:
