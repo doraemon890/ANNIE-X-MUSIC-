@@ -46,17 +46,25 @@ async def get_userinfo_img(
 
         circular_img = Image.new("RGBA", img.size, (0, 0, 0, 0))
         circular_img.paste(img, (0, 0), mask)
-        resized = circular_img.resize((833, 857))
-        bg.paste(resized, (1029, 67), resized)
+        resized = circular_img.resize((955, 967))
+        bg.paste(resized, (1687, 304), resized)
 
     img_draw = ImageDraw.Draw(bg)
 
-    img_draw.text(
-        (2405, 720),
-        text=str(user_id).upper(),
-        font=get_font(95, font_path),
-        fill=(125, 227, 230),
-    )
+   # Your existing code to print user_id
+img_draw.text(
+    (460, 1055),
+    text=str(user_id).upper(),
+    font=get_font(95, font_path),
+    fill=(125, 227, 230),
+)
+
+# Add another line to print dc_id
+img_draw.text(
+    (640, 1275),  # Adjust the coordinates as needed
+    text=str(dc_id).upper(),  # Convert to string and uppercase if needed
+    font=get_font(95, font_path),  # Adjust font and size if needed
+    fill=(125, 227, 230),  # Adjust color if needed
 
 
     path = f"./userinfo_img_{user_id}.png"
@@ -66,7 +74,7 @@ async def get_userinfo_img(
 
 # --------------------------------------------------------------------------------- #
 
-bg_path = "ANNIEMUSIC/assets/annie/jarvisXinfo.png"
+bg_path = "ANNIEMUSIC/assets/annie/AnnieNinfo.png"
 font_path = "ANNIEMUSIC/assets/annie/jarvisinf.ttf"
 
 # --------------------------------------------------------------------------------- #
