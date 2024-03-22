@@ -65,7 +65,7 @@ img_draw.text(
     text=str(dc_id).upper(),  # Convert to string and uppercase if needed
     font=get_font(95, font_path),  # Adjust font and size if needed
     fill=(125, 227, 230),  # Adjust color if needed
-
+)
 
     path = f"./userinfo_img_{user_id}.png"
     bg.save(path)
