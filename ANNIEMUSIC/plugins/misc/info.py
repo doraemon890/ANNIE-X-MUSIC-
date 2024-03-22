@@ -51,21 +51,13 @@ async def get_userinfo_img(
 
     img_draw = ImageDraw.Draw(bg)
 
-   # Your existing code to print user_id
-img_draw.text(
-    (460, 1055),
-    text=str(user_id).upper(),
-    font=get_font(95, font_path),
-    fill=(125, 227, 230),
-)
+    img_draw.text(
+        (460, 1055),
+        text=str(user_id).upper(),
+        font=get_font(95, font_path),
+        fill=(125, 227, 230),
+    )
 
-# Add another line to print dc_id
-img_draw.text(
-    (640, 1275),  # Adjust the coordinates as needed
-    text=str(dc_id).upper(),  # Convert to string and uppercase if needed
-    font=get_font(95, font_path),  # Adjust font and size if needed
-    fill=(125, 227, 230),  # Adjust color if needed
-)
 
     path = f"./userinfo_img_{user_id}.png"
     bg.save(path)
