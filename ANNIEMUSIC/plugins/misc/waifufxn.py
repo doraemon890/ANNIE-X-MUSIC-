@@ -2,7 +2,6 @@ from pyrogram import Client, filters
 import requests
 from ANNIEMUSIC import app
 
-
 # Function to retrieve animation URL from the API
 def get_animation(api_token, animation_type):
     url = f"https://waifu.it/api/v4/{animation_type}"
@@ -20,7 +19,7 @@ def get_animation(api_token, animation_type):
         return None
 
 # Command handlers for various animations
-@app.on_message(filters.command(["punch", "slap", "lick", "kill", "kick", "hug", "bite", "kiss", "highfive"]) & ~filters.forwarded & ~filters.via_bot)
+@app.on_message(filters.command(["punch", "slap", "lick", "kill", "kick", "hug", "bite", "kiss", "highfive", "die", "run", "shoot", "dance"]) & ~filters.forwarded & ~filters.via_bot)
 def animation_command(client, message):
     try:
         sender = message.from_user.mention(style='markdown')
@@ -35,7 +34,11 @@ def animation_command(client, message):
             "hug": {"emoji": "🤗", "text": "hugged"},
             "bite": {"emoji": "😈", "text": "bit"},
             "kiss": {"emoji": "😘", "text": "kissed"},
-            "highfive": {"emoji": "🙌", "text": "high-fived"}
+            "highfive": {"emoji": "🙌", "text": "high-fived"},
+            "die": {"emoji": "💀", "text": "died"},
+            "run": {"emoji": "🏃", "text": "ran"},
+            "shoot": {"emoji": "🔫", "text": "shot"},
+            "dance": {"emoji": "💃", "text": "danced"}
         }
 
         command = message.command[0].lower()
