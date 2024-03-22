@@ -13,7 +13,7 @@ def check_phone(client, message):
         args = message.text.split(None, 1)
         information = args[1]
         number = information
-        key = "f66950368a61ebad3cba9b5924b4532d"
+        key = "D9ZxZyS6pZYetfVo0VFqzhXh8jnyTwpG"
         api = (
             "http://apilayer.net/api/validate?access_key="
             + key
