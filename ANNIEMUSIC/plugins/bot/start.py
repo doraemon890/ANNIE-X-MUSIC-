@@ -59,7 +59,7 @@ async def start_pm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            umm = await m.reply_sticker(sticker=random.choice(STICKER))
+            umm = await message.reply_sticker(sticker=random.choice(STICKER))
             await asyncio.sleep(2)
             await umm.delete()
             return await message.reply_video(
@@ -114,7 +114,7 @@ async def start_pm(client, message: Message, _):
                 )
     else:
         out = private_panel(_)
-        umm = await m.reply_sticker(sticker=random.choice(STICKER))
+        umm = await message.reply_sticker(sticker=random.choice(STICKER))
         await asyncio.sleep(2)
         await umm.delete()  
         served_chats = len(await get_served_chats())
