@@ -169,7 +169,7 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                 await message.reply_video(
+                await message.reply_video(
                     random.choice(ANNIE_VID),
                     caption=_["start_3"].format(
                         message.from_user.mention,
