@@ -41,9 +41,9 @@ ANNIE_VID = [
 ]
 
 STICKERS = [
-    "CAACAgUAAx0CYlaJawABBy4vZaieO6T-Ayg3mD-JP-f0yxJngIkAAv0JAALVS_FWQY7kbQSaI-geBA",
-    "CAACAgUAAx0CYlaJawABBy4rZaid77Tf70SV_CfjmbMgdJyVD8sAApwLAALGXCFXmCx8ZC5nlfQeBA",
-    "CAACAgUAAx0CYlaJawABBy4jZaidvIXNPYnpAjNnKgzaHmh3cvoAAiwIAAIda2lVNdNI2QABHuVVHgQ",
+    "CAACAgQAAx0CfL_LsAACCT5l_rHyNwYlxyehPj1ADqv2ZU4y3AACJw4AAiW-iFLB9tSPazIinx4E",
+    "CAACAgUAAx0CfL_LsAACCSRl_oru7uW8WAt3-L1pYQWe_1mxawACQw8AAj78MVeb3v2OFvEnNB4E",
+    "CAACAgUAAx0CfL_LsAACCSxl_ov89WkiooOodUBTfSc_AAHlFk4AAhgHAALJdnBVsMGurYbGRK4eBA",
 ]
 
 
@@ -55,8 +55,9 @@ async def start_pm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            await message.reply_sticker(sticker=random.choice(STICKERS))
-            await asyncio.sleep(2)
+            sticker_message = await message.reply_sticker(sticker=random.choice(STICKERS))
+            asyncio.create_task(delete_sticker_after_delay(sticker_message))
+            await asyncio.sleep(2)  # Pause for 2 seconds
             await message.delete()
             return await message.reply_video(
                 random.choice(ANNIE_VID),
@@ -111,6 +112,8 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         await message.reply_sticker(sticker=random.choice(STICKERS))
+        sticker_message = await message.reply_sticker(sticker=random.choice(STICKERS))
+        asyncio.create_task(delete_sticker_after_delay(sticker_message))
         await asyncio.sleep(2)
         await message.delete()
         served_chats = len(await get_served_chats())
@@ -127,7 +130,6 @@ async def start_pm(client, message: Message, _):
                 text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
 
-
 @app.on_message(filters.command(["start"]) & filters.group & ~BANNED_USERS)
 @LanguageStart
 async def start_gp(client, message: Message, _):
@@ -139,7 +141,6 @@ async def start_gp(client, message: Message, _):
         reply_markup=InlineKeyboardMarkup(out),
     )
     return await add_served_chat(message.chat.id)
-
 
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
@@ -168,7 +169,7 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                await message.reply_video(
+                 await message.reply_video(
                     random.choice(ANNIE_VID),
                     caption=_["start_3"].format(
                         message.from_user.mention,
@@ -182,3 +183,9 @@ async def welcome(client, message: Message):
                 await message.stop_propagation()
         except Exception as ex:
             print(ex)
+
+
+async def delete_sticker_after_delay(message):
+    await asyncio.sleep(2)
+    await message.delete()
+
