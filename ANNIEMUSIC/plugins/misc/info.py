@@ -1,4 +1,6 @@
-import asyncio, os, time, aiohttp
+import asyncio
+import os
+import time
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from asyncio import sleep
@@ -9,6 +11,7 @@ from pyrogram.types import *
 from typing import Union, Optional
 import random
 
+# List of Annie's photos
 anniephoto = [
     "https://telegra.ph/file/07fd9e0e34bc84356f30d.jpg",
     "https://telegra.ph/file/3c4de59511e179018f902.jpg",
@@ -17,23 +20,20 @@ anniephoto = [
     "https://telegra.ph/file/002b98f44394097758551.jpg"
 ]
 
-# --------------------------------------------------------------------------------- #
-
-
+# Function to get font
 get_font = lambda font_size, font_path: ImageFont.truetype(font_path, font_size)
+
+# Function to resize text if too long
 resize_text = (
     lambda text_size, text: (text[:text_size] + "...").upper()
     if len(text) > text_size
     else text.upper()
 )
 
-# --------------------------------------------------------------------------------- #
-
-
 async def get_userinfo_img(
     bg_path: str,
     font_path: str,
-    user_id: Union[int, str],    
+    user_id: Union[int, str],
     profile_path: Optional[str] = None
 ):
     bg = Image.open(bg_path)
@@ -52,43 +52,38 @@ async def get_userinfo_img(
     img_draw = ImageDraw.Draw(bg)
 
     # Draw user ID
-user_id_text = str(user_id).upper()
-user_id_font = get_font(95, font_path)
-user_id_text_width, user_id_text_height = img_draw.textsize(user_id_text, font=user_id_font)
-user_id_position = (460, 1055)  # Custom coordinates for user ID
-img_draw.text(
-    user_id_position,
-    text=user_id_text,
-    font=user_id_font,
-    fill=(125, 227, 230),
-)
+    user_id_text = str(user_id).upper()
+    user_id_font = get_font(95, font_path)
+    user_id_text_width, user_id_text_height = img_draw.textsize(user_id_text, font=user_id_font)
+    user_id_position = (460, 1055)  # Custom coordinates for user ID
+    img_draw.text(
+        user_id_position,
+        text=user_id_text,
+        font=user_id_font,
+        fill=(125, 227, 230),
+    )
 
-# Draw DC ID
-dc_id_text = str(dc_id).upper()
-dc_id_font = get_font(95, font_path)
-dc_id_text_width, dc_id_text_height = img_draw.textsize(dc_id_text, font=dc_id_font)
-dc_id_position = (640, 1275)  # Custom coordinates for DC ID
-img_draw.text(
-    dc_id_position,
-    text=dc_id_text,
-    font=dc_id_font,
-    fill=(125, 227, 230),
-)
-
+    # Draw DC ID
+    dc_id_text = str(dc_id).upper()
+    dc_id_font = get_font(95, font_path)
+    dc_id_text_width, dc_id_text_height = img_draw.textsize(dc_id_text, font=dc_id_font)
+    dc_id_position = (640, 1275)  # Custom coordinates for DC ID
+    img_draw.text(
+        dc_id_position,
+        text=dc_id_text,
+        font=dc_id_font,
+        fill=(125, 227, 230),
+    )
 
     path = f"./userinfo_img_{user_id}.png"
     bg.save(path)
     return path
-   
 
-# --------------------------------------------------------------------------------- #
-
+# Path to background image and font
 bg_path = "ANNIEMUSIC/assets/annie/AnnieNinfo.png"
 font_path = "ANNIEMUSIC/assets/annie/jarvisinf.ttf"
 
-# --------------------------------------------------------------------------------- #
-
-
+# Text template for user info
 INFO_TEXT = """**
 ❅─────✧❅✦❅✧─────❅
             ✦ ᴜsᴇʀ ɪɴғᴏ ✦
@@ -105,25 +100,23 @@ INFO_TEXT = """**
 **❅─────✧❅✦❅✧─────❅**
 """
 
-# --------------------------------------------------------------------------------- #
-
+# Function to get user's status
 async def userstatus(user_id):
-   try:
-      user = await app.get_users(user_id)
-      x = user.status
-      if x == enums.UserStatus.RECENTLY:
-         return "Recently."
-      elif x == enums.UserStatus.LAST_WEEK:
-          return "Last week."
-      elif x == enums.UserStatus.LONG_AGO:
-          return "Long time ago."
-      elif x == enums.UserStatus.OFFLINE:
-          return "Offline."
-      elif x == enums.UserStatus.ONLINE:
-         return "Online."
-   except:
+    try:
+        user = await app.get_users(user_id)
+        x = user.status
+        if x == enums.UserStatus.RECENTLY:
+            return "Recently."
+        elif x == enums.UserStatus.LAST_WEEK:
+            return "Last week."
+        elif x == enums.UserStatus.LONG_AGO:
+            return "Long time ago."
+        elif x == enums.UserStatus.OFFLINE:
+            return "Offline."
+        elif x == enums.UserStatus.ONLINE:
+            return "Online."
+    except:
         return "**sᴏᴍᴇᴛʜɪɴɢ ᴡʀᴏɴɢ ʜᴀᴘᴘᴇɴᴇᴅ !**"
-    
 
 # --------------------------------------------------------------------------------- #
 
