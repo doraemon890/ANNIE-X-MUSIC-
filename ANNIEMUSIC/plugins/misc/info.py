@@ -33,7 +33,7 @@ resize_text = (
 async def get_userinfo_img(
     bg_path: str,
     font_path: str,
-    user_id: Union[int, str],
+    user_id: Union[int, str],    
     profile_path: Optional[str] = None
 ):
     bg = Image.open(bg_path)
@@ -51,29 +51,13 @@ async def get_userinfo_img(
 
     img_draw = ImageDraw.Draw(bg)
 
-    # Draw user ID
-    user_id_text = str(user_id).upper()
-    user_id_font = get_font(95, font_path)
-    user_id_text_width, user_id_text_height = img_draw.textsize(user_id_text, font=user_id_font)
-    user_id_position = (460, 1055)  # Custom coordinates for user ID
     img_draw.text(
-        user_id_position,
-        text=user_id_text,
-        font=user_id_font,
+        (460, 1055),
+        text=str(user_id).upper(),
+        font=get_font(95, font_path),
         fill=(125, 227, 230),
     )
 
-    # Draw DC ID
-    dc_id_text = str(dc_id).upper()
-    dc_id_font = get_font(95, font_path)
-    dc_id_text_width, dc_id_text_height = img_draw.textsize(dc_id_text, font=dc_id_font)
-    dc_id_position = (640, 1275)  # Custom coordinates for DC ID
-    img_draw.text(
-        dc_id_position,
-        text=dc_id_text,
-        font=dc_id_font,
-        fill=(125, 227, 230),
-    )
 
     path = f"./userinfo_img_{user_id}.png"
     bg.save(path)
