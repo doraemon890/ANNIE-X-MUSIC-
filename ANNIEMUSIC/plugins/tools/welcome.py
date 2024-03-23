@@ -69,14 +69,14 @@ def welcomepic(pic, user, chatname, id, uname):
     background = Image.open("ANNIEMUSIC/assets/annie/AnnieNwel.png")
     pfp = Image.open(pic).convert("RGBA")
     pfp = circle(pfp)
-    pfp = pfp.resize((839, 885))
+    pfp = pfp.resize((823, 821))
     draw = ImageDraw.Draw(background)
     font_large = ImageFont.truetype('ANNIEMUSIC/assets/annie/ArialReg.ttf', size=65)
     font_small = ImageFont.truetype('ANNIEMUSIC/assets/annie/ArialReg.ttf', size=60)
     draw.text((421, 715), f'{user}', fill=(242, 242, 242), font=font_large)
     draw.text((270, 1005), f'{id}', fill=(242, 242, 242), font=font_large)
     draw.text((570, 1308), f"{uname}", fill=(242, 242, 242), font=font_large)
-    pfp_position = (1883, 389)
+    pfp_position = (1895, 399)
     background.paste(pfp, pfp_position, pfp)
     background.save(f"downloads/welcome#{id}.png")
     return f"downloads/welcome#{id}.png"
@@ -131,7 +131,7 @@ async def greet_new_member(_, member: ChatMemberUpdated):
                 user.photo.big_file_id, file_name=f"pp{user.id}.png"
             )
         except AttributeError:
-            pic = "ANNIEMUSIC/assets/upic.png"
+            pic = "ANNIEMUSIC/assets/upic2.png"
         if (temp.MELCOW).get(f"welcome-{member.chat.id}") is not None:
             try:
                 await temp.MELCOW[f"welcome-{member.chat.id}"].delete()
