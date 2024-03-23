@@ -41,9 +41,11 @@ ANNIE_VID = [
 ]
 
 STICKERS = [
-    "CAACAgQAAx0CfL_LsAACCT5l_rHyNwYlxyehPj1ADqv2ZU4y3AACJw4AAiW-iFLB9tSPazIinx4E",
+    "CAACAgUAAx0Cd6nKUAACASBl_rnalOle6g7qS-ry-aZ1ZpVEnwACgg8AAizLEFfI5wfykoCR4h4E",
     "CAACAgUAAx0CfL_LsAACCSRl_oru7uW8WAt3-L1pYQWe_1mxawACQw8AAj78MVeb3v2OFvEnNB4E",
-    "CAACAgUAAx0CfL_LsAACCSxl_ov89WkiooOodUBTfSc_AAHlFk4AAhgHAALJdnBVsMGurYbGRK4eBA",
+    "CAACAgEAAx0Cd6nKUAACATVl_rtAi9KCVQf8vcUC4FMDUfLP8wACHQEAAlEpDTnhphyRDaTrPR4E",
+    "CAACAgUAAx0Cd6nKUAACATJl_rsEJOsaaPSYGhU7bo7iEwL8AAPMDgACu2PYV8Vb8aT4_HUPHgQ",
+
 ]
 
 
@@ -111,7 +113,6 @@ async def start_pm(client, message: Message, _):
                 )
     else:
         out = private_panel(_)
-        await message.reply_sticker(sticker=random.choice(STICKERS))
         sticker_message = await message.reply_sticker(sticker=random.choice(STICKERS))
         asyncio.create_task(delete_sticker_after_delay(sticker_message))
         await asyncio.sleep(2)
