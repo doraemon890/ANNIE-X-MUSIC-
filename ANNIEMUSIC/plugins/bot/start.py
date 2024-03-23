@@ -40,14 +40,9 @@ ANNIE_VID = [
 "https://telegra.ph/file/e97715885d0a0cfbddaaa.mp4",
 "https://telegra.ph/file/943bb99829ec526c3f99a.mp4"
 
-]
-# Random stickers
 
-STICKER = [
-    "CAACAgUAAx0CfL_LsAACCSxl_ov89WkiooOodUBTfSc_AAHlFk4AAhgHAALJdnBVsMGurYbGRK4eBA",
-    "CAACAgUAAx0CfL_LsAACCSRl_oru7uW8WAt3-L1pYQWe_1mxawACQw8AAj78MVeb3v2OFvEnNB4E",
-    "CAACAgUAAx0CfL_LsAACCSBl_orYW5vSoMibMlfCM1iKf_abrQACLAgAAh1raVU100jZAAEe5VUeBA",
 ]
+
 
 
 
@@ -59,9 +54,6 @@ async def start_pm(client, message: Message, _):
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            umm = await message.reply_sticker(sticker=random.choice(STICKER))
-            await asyncio.sleep(2)
-            await umm.delete()
             return await message.reply_video(
                 random.choice(ANNIE_VID),
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
@@ -114,9 +106,6 @@ async def start_pm(client, message: Message, _):
                 )
     else:
         out = private_panel(_)
-        umm = await message.reply_sticker(sticker=random.choice(STICKER))
-        await asyncio.sleep(2)
-        await umm.delete()  
         served_chats = len(await get_served_chats())
         served_users = len(await get_served_users())
         UP, CPU, RAM, DISK = await bot_sys_stats()
