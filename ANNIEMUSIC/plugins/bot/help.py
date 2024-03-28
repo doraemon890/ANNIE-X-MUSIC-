@@ -4,7 +4,7 @@ from pyrogram import filters, types
 from pyrogram.types import InlineKeyboardMarkup, Message
 
 from ANNIEMUSIC import app
-from ANNIEMUSIC.utils import first_page, second_page
+from ANNIEMUSIC.utils import first_page, second_page, third_page
 from ANNIEMUSIC.utils.database import get_lang
 from ANNIEMUSIC.utils.decorators.language import LanguageStart, languageCB
 from ANNIEMUSIC.utils.inline.help import help_back_markup, private_help_panel
@@ -130,5 +130,14 @@ async def first_pagexx(client, CallbackQuery, _):
     except:
         return
 
+@app.on_callback_query(filters.regex("AYU") & ~BANNED_USERS)
+@languageCB
+async def second_pagexx(client, CallbackQuery, _):
+    menu_next = third_page(_)
+    try:
+        await CallbackQuery.message.edit_text(_["help_1"], reply_markup=menu_next)
+        return
+    except:
+        return
 
         
