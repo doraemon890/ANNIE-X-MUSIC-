@@ -47,7 +47,7 @@ git+https://github.com/AsmSafone/SafoneAPI
 lexica-api
 httpx==0.25.2
 gpytranslate
-openai==0.28.0
+openai==1.14.3
 pickledb
 python-telegram-bot==21.0.1
 img2pdf
