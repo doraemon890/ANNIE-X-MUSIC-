@@ -7,11 +7,11 @@ from ANNIEMUSIC import app
 def start_panel(_):
     buttons = [
         [
-            InlineKeyboardButton(text="✧ ᴀᴅᴅ ᴍᴇ ✧", url=f"https://t.me/{app.username}?startgroup=true")
+            InlineKeyboardButton(text=_["S_B_11"], url=f"https://t.me/{app.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton(text="✨ sᴜᴩᴩᴏʀᴛ ✨", url="https://t.me/JARVIS_X_SUPPORT"),
-            InlineKeyboardButton(text="🥀 ᴅᴇᴠᴇʟᴏᴩᴇʀ 🥀", url=config.OWNER_ID)
+            InlineKeyboardButton(text=_["S_B_12"], url=config.SUPPORT_CHANNEL),
+            InlineKeyboardButton(text=_["S_B_13"], url=config.OWNER_ID)
         ],
     ]
     return buttons
