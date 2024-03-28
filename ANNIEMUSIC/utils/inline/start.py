@@ -7,7 +7,7 @@ from ANNIEMUSIC import app
 def start_panel(_):
     buttons = [
         [
-            InlineKeyboardButton(text=_["✧ ᴀᴅᴅ ᴍᴇ ✧"], url=f"https://t.me/{app.username}?startgroup=true")
+            InlineKeyboardButton(text="✧ ᴀᴅᴅ ᴍᴇ ✧", url=f"https://t.me/{app.username}?startgroup=true")
         ],
         [
             InlineKeyboardButton(text="✨ sᴜᴩᴩᴏʀᴛ ✨", url="https://t.me/JARVIS_X_SUPPORT"),
